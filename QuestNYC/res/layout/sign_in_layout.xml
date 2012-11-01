@@ -13,64 +13,46 @@
         android:text="@string/sign_in_welcome"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/signInTextView"
+    <EditText
+        android:id="@+id/emailField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/welcomeTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
-        android:text="@string/sign_in_sign_in"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginTop="63dp"
+        android:ems="10"
+        android:inputType="textPersonName" >
 
-    <EditText
-        android:id="@+id/signInField"
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/signInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/signInTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <TextView
-        android:id="@+id/signUpTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/signInTextView"
-        android:layout_below="@+id/signInField"
-        android:layout_marginTop="43dp"
-        android:text="@string/sign_in_sign_up"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <EditText
-        android:id="@+id/signUpField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/signInField"
-        android:layout_below="@+id/signUpTextView"
-        android:layout_marginTop="38dp"
-        android:ems="10"
-        android:inputType="textPersonName" />
+        android:layout_centerVertical="true"
+        android:onClick="onClick"
+        android:text="@string/signIn" />
 
     <Button
         android:id="@+id/helpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/signUpField"
-        android:layout_marginBottom="34dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="33dp"
         android:onClick="onClick"
         android:text="@string/help" />
 
     <Button
-        android:id="@+id/logInButton"
+        android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/helpButton"
-        android:layout_alignBottom="@+id/helpButton"
-        android:layout_alignLeft="@+id/signUpField"
+        android:layout_above="@+id/helpButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp"
         android:onClick="onClick"
-        android:text="@string/logIn" />
+        android:text="@string/signUp" />
 
 </RelativeLayout>

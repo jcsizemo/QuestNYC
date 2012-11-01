@@ -14,10 +14,13 @@ public class SignInActivity extends Activity {
     }
     
     public void onClick(View v) {
-    	if (R.id.logInButton == v.getId()) {
+    	if (R.id.signInButton == v.getId()) {
     		
     	}
-    	if (R.id.helpButton == v.getId()) {
+    	else if (R.id.signUpButton == v.getId()) {
+    		
+    	}
+    	else if (R.id.helpButton == v.getId()) {
     		Intent intent = new Intent(this, HelpActivity.class);
     		startActivity(intent);
     	}
