@@ -1,5 +1,13 @@
 package com.columbia.quest.create;
 
-public class CreateQuestActivity {
+import android.app.Activity;
+import android.os.Bundle;
+
+public class CreateQuestActivity extends Activity {
+	
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
 }

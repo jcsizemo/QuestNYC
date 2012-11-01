@@ -1,5 +1,13 @@
 package com.columbia.quest;
 
-public class QuestionActivity {
+import android.app.Activity;
+import android.os.Bundle;
+
+public class QuestionActivity extends Activity {
+	
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
 }

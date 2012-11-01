@@ -20,6 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <activity android:name="HelpActivity"></activity>
+        <activity android:name="com.columbia.location.BoroughActivity"></activity>
+        <activity android:name="com.columbia.location.NeighborhoodActivity"></activity>
+        <activity android:name="com.columbia.quest.QuestActivity"></activity>
+        <activity android:name="com.columbia.quest.QuestionActivity"></activity>
+        <activity android:name="com.columbia.quest.RatingActivity"></activity>
+        <activity android:name="com.columbia.quest.create.CreateQuestActivity"></activity>
+        </application>
 
 </manifest>

@@ -2,7 +2,8 @@ package com.columbia.questnyc;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.content.Intent;
+import android.view.View;
 
 public class SignInActivity extends Activity {
 
@@ -11,10 +12,14 @@ public class SignInActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_layout);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main_menu, menu);
-        return true;
+    
+    public void onClick(View v) {
+    	if (R.id.logInButton == v.getId()) {
+    		
+    	}
+    	if (R.id.helpButton == v.getId()) {
+    		Intent intent = new Intent(this, HelpActivity.class);
+    		startActivity(intent);
+    	}
     }
 }
