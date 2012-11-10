@@ -11,5 +11,6 @@
     <string name="help2">Once you are logged in, your location will be determined and you will be presented a list of quests in your area.</string>
     <string name="help3">Solving these quests will require a keen eye and a sharp mind. Are you up to the challenge?</string>
     <string name="help4">That\'s all there is to it! Have fun questing! (press back button to exit)</string>
+    <string name="rating">"What did you think of this quest?</string>
 
 </resources>

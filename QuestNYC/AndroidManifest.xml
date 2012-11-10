@@ -6,6 +6,8 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -27,6 +29,7 @@
         <activity android:name="com.columbia.quest.QuestionActivity"></activity>
         <activity android:name="com.columbia.quest.RatingActivity"></activity>
         <activity android:name="com.columbia.quest.create.CreateQuestActivity"></activity>
+        <activity android:name="com.columbia.server.ServerHelper"></activity>
         </application>
 
 </manifest>

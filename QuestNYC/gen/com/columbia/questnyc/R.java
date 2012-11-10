@@ -15,17 +15,18 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int emailField=0x7f070006;
-        public static final int helpButton=0x7f070008;
-        public static final int menu_settings=0x7f07000a;
-        public static final int signInButton=0x7f070007;
-        public static final int signUpButton=0x7f070009;
+        public static final int emailField=0x7f070007;
+        public static final int helpButton=0x7f070009;
+        public static final int menu_settings=0x7f07000b;
+        public static final int ratingBar1=0x7f070005;
+        public static final int signInButton=0x7f070008;
+        public static final int signUpButton=0x7f07000a;
         public static final int textView1=0x7f070000;
         public static final int textView2=0x7f070001;
         public static final int textView3=0x7f070002;
         public static final int textView4=0x7f070003;
         public static final int textView5=0x7f070004;
-        public static final int welcomeTextView=0x7f070005;
+        public static final int welcomeTextView=0x7f070006;
     }
     public static final class layout {
         public static final int borough_layout=0x7f030000;
@@ -48,6 +49,7 @@ public final class R {
         public static final int help3=0x7f040009;
         public static final int help4=0x7f04000a;
         public static final int menu_settings=0x7f040001;
+        public static final int rating=0x7f04000b;
         public static final int signIn=0x7f040005;
         public static final int signUp=0x7f040006;
         public static final int sign_in_welcome=0x7f040003;
