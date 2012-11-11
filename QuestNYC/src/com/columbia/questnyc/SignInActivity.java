@@ -1,5 +1,6 @@
 package com.columbia.questnyc;
 
+import com.columbia.quest.QuestActivity;
 import com.columbia.server.ServerHelper;
 
 import android.os.Bundle;
@@ -21,7 +22,8 @@ public class SignInActivity extends Activity {
     		startActivity(intent);
     	}
     	else if (R.id.signUpButton == v.getId()) {
-    		
+    		Intent intent = new Intent(this, QuestActivity.class);
+    		startActivity(intent);
     	}
     	else if (R.id.helpButton == v.getId()) {
     		Intent intent = new Intent(this, HelpActivity.class);
