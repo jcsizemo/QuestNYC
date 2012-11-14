@@ -1,22 +1,21 @@
 package com.columbia.server;
 
+import org.apache.http.HttpResponse;
+
 public class QuestQuery extends ServerQuery {
 
 	public void run() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void get() {
-		// TODO Auto-generated method stub
-		
+	public HttpResponse get() {		// get quests
+		return null;
 	}
 
 	@Override
-	public void post() {
-		// TODO Auto-generated method stub
-		
+	public HttpResponse post() {	// creating a quest, posting to server
+		return null;
 	}
 
 }

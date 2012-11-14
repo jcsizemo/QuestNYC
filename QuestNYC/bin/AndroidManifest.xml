@@ -25,13 +25,14 @@
             </intent-filter>
         </activity>
         <activity android:name="HelpActivity"></activity>
-        <activity android:name="com.columbia.location.BoroughActivity"></activity>
-        <activity android:name="com.columbia.location.NeighborhoodActivity"></activity>
-        <activity android:name="com.columbia.quest.QuestActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name="com.columbia.quest.AnswerQuestionActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name="com.columbia.quest.QuestionActivity"></activity>
+        <activity android:name="com.columbia.quest.QuestActivity"></activity>
         <activity android:name="com.columbia.quest.RatingActivity"></activity>
-        <activity android:name="com.columbia.quest.create.CreateQuestActivity"></activity>
+        <activity android:name="com.columbia.quest.create.CreateQuestActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name="com.columbia.server.ServerHelper"></activity>
+        <activity android:name="PlayOrCreateActivity"></activity>
+        <activity android:name="NicknameActivity"></activity>
         </application>
 
 </manifest>

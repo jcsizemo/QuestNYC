@@ -6,7 +6,6 @@
     <string name="sign_in_welcome">Welcome To QuestNYC!</string>
     <string name="help">Help</string>
     <string name="signIn">Sign In</string>
-    <string name="signUp">Sign Up</string>
     <string name="help1">To get started, please log in using your email address. If you have not done so, please provide one so an account can be made for you. Once you are logged in, your location will be recorded and you will be presented a list of quests in your area.</string>
     <string name="help2">Once you are logged in, your location will be determined and you will be presented a list of quests in your area.</string>
     <string name="help3">Solving these quests will require a keen eye and a sharp mind. Are you up to the challenge?</string>
@@ -14,5 +13,11 @@
     <string name="rating">"What did you think of this quest?</string>
     <string name="regular_key">0sh0i4XC5lcHE4m5wt_o0gBPur4_GO5vU595X2g</string>
     <string name="debug_key">0sh0i4XC5lcF0n82pEXLAfYNQ4MYPk0O9mXHSmA</string>
+    <string name="create_quest">Create Quest</string>
+    <string name="play_quest">Play Quest</string>
+    <string name="delete_quest">Delete Quest</string>
+    <string name="signUp">Sign Up</string>
+    <string name="goBack">Return</string>
+    <string name="nickname">What\'s your name?</string>
 
 </resources>

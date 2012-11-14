@@ -1,22 +1,21 @@
 package com.columbia.server;
 
+import org.apache.http.HttpResponse;
+
 public class QuestionQuery extends ServerQuery {
 
 	public void run() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void get() {
-		// TODO Auto-generated method stub
-		
+	public HttpResponse get() {
+		return null;
 	}
 
 	@Override
-	public void post() {
-		// TODO Auto-generated method stub
-		
+	public HttpResponse post() { // check answer
+		return null;
 	}
 
 }
