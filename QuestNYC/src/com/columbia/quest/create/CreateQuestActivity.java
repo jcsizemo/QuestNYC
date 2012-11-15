@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class CreateQuestActivity extends MapActivity implements OnTouchListener {
@@ -70,6 +71,7 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
     OverlayItem overlayitem;
     double latitude;
     double longitude;
+    Button placeButton;
     
     List<Overlay> questPoints = new ArrayList<Overlay>();
     GeoPoint center;
@@ -81,6 +83,7 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_quest_layout);
         
+        placeButton = (Button) findViewById(R.id.placeButton);
         cd = new ConnectionDetector(getApplicationContext());
 
 		// Check if Internet present
@@ -111,7 +114,6 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 			// stop executing code by return
 			return;
 		}
-		new LoadPlaces().execute();
  
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.setOnTouchListener(this);
@@ -235,15 +237,28 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 	}
 	
 	public boolean onTouch(View arg0, MotionEvent arg1) {
-		updateCenter(mapView);
+		if (questPoints.size() < 5) {
+			updateCenter(mapView);
+		}
 		return false;
 	}
 	
 	public void onClick(View v) {
 		if (v.getId() == R.id.placeButton) {
-			questPoints = mapOverlays;
+			if (placeButton.getText().equals("Save Boundaries")) {
+				new LoadPlaces().execute();
+			}
+			else {
+				if (questPoints.size() < 5) {
+					questPoints.addAll(mapOverlays);
+				}
+				if (questPoints.size() == 5) {
+					placeButton.setText("Save Boundaries");
+				}
+			}
 		}
 		else if (v.getId() == R.id.startOverButton) {
+			placeButton.setText("Place");
 			mapOverlays.clear();
 			questPoints.clear();
 			mapView.invalidate();

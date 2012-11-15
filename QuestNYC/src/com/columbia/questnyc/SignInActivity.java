@@ -6,6 +6,7 @@ import com.columbia.server.SignInQuery;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ public class SignInActivity extends Activity {
 	String email;
 	String password;
 	boolean isAdmin;
+	boolean success;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,8 +42,11 @@ public class SignInActivity extends Activity {
     			return;
     		}
     		if (R.id.signInButton == v.getId()) {
-    			SignInQuery sq = new SignInQuery(this, email,password,ServerQuery.POST,null);
-    			sq.execute();
+    			Intent intent = new Intent(this, SignInQuery.class);
+    			intent.putExtra("email", email);
+    			intent.putExtra("password",password);
+    			intent.putExtra("interactionType",ServerQuery.POST);
+    			startActivityForResult(intent,3);
     		}
     		else if (R.id.signUpButton == v.getId()) {
     			Intent intent = new Intent(this, NicknameActivity.class);
@@ -55,16 +60,24 @@ public class SignInActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 2 && resultCode == 0) {
 			nickname = data.getStringExtra("Nickname");
+			Intent intent = new Intent(this, SignInQuery.class);
+			intent.putExtra("email", email);
+			intent.putExtra("password", password);
+			intent.putExtra("interactionType", ServerQuery.POST);
+			intent.putExtra("nickname", nickname);
+			startActivityForResult(intent, 3);
 		}
-		SignInQuery sq = new SignInQuery(this,email,password,ServerQuery.POST,nickname);
-		sq.execute();
+		if (requestCode == 3 && resultCode == 0) {
+			process(data);
+		}
 	}
 	
-	public void process(boolean success, boolean isAdmin) {
+	public void process(Intent data) {
+		success = data.getBooleanExtra("success", false);
+		isAdmin = data.getBooleanExtra("isAdmin", false);
 		if (success == true) {
 			Intent intent = new Intent(this, PlayOrCreateActivity.class);
 			intent.putExtra("isAdmin", isAdmin);
-			startActivity(intent);
 		}
 		else {
 			Toast.makeText(this,"Problems signing in. Please check your input information.", Toast.LENGTH_SHORT).show();

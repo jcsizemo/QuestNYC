@@ -18,7 +18,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.columbia.questnyc.SignInActivity;
+
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Looper;
 
 public class SignInQuery extends ServerQuery {
@@ -29,14 +34,17 @@ public class SignInQuery extends ServerQuery {
 	private String query;
 	public boolean success = false;
 	public boolean isAdmin = false;
-	private Context mContext;
+	private Activity activity;
+	Intent intent;
 	
-	public SignInQuery(Context context, String email, String password, int interactionType, String nickname) {
-		this.email = email;
-		this.password = password;
-		this.interactionType = interactionType;
-		this.nickname = nickname;
-		this.mContext = context;
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		Intent intent = getIntent();
+		this.email = intent.getStringExtra("email");
+		this.password = intent.getStringExtra("password");
+		this.interactionType = intent.getIntExtra("interactionType",0);
+		this.nickname = intent.getStringExtra("nickname");
+		this.execute();
 	}
 
 	@Override
@@ -107,20 +115,10 @@ public class SignInQuery extends ServerQuery {
 				}
 			}
 		}
-		try {
-			Class c = mContext.getClass();
-			Method m = c.getMethod("process", boolean.class, boolean.class);
-			Looper.prepare();
-			m.invoke(c.newInstance(), success, isAdmin);
-		}
-		catch (NoSuchMethodException msme) {	
-		}
-		catch (IllegalAccessException iae) {	
-		}
-		catch (InvocationTargetException ite) {
-		}
-		catch (InstantiationException ie) {
-		}
+		intent.putExtra("success", success);
+		intent.putExtra("isAdmin",isAdmin);
+		setResult(0,intent);
+		finish();
 	}
 
 }

@@ -4,7 +4,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-public abstract class ServerQuery implements Runnable {
+import android.app.Activity;
+
+public abstract class ServerQuery extends Activity implements Runnable {
 	
 	public static final String address = "http://54.243.134.140";
 	public static final int GET = 0;
