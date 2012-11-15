@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.columbia.location.CenterPoint;
 import com.columbia.location.GPSHelper;
 import com.columbia.places.AddItemizedOverlay;
 import com.columbia.places.AlertDialogManager;
 import com.columbia.places.ConnectionDetector;
 import com.columbia.places.GPSTracker;
+import com.columbia.places.GetPlacesActivity;
 import com.columbia.places.GooglePlaces;
 import com.columbia.places.Place;
 import com.columbia.places.PlacesList;
 import com.columbia.questnyc.R;
+import com.columbia.server.ServerQuery;
+import com.columbia.server.SignInQuery;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -24,6 +28,7 @@ import com.google.android.maps.Projection;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
@@ -72,8 +77,11 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
     double latitude;
     double longitude;
     Button placeButton;
+    Drawable dCenter;
+    Drawable dUser;
+    Drawable dBoundary;
     
-    List<Overlay> questPoints = new ArrayList<Overlay>();
+    List<OverlayItem> questPoints = new ArrayList<OverlayItem>();
     GeoPoint center;
 	
 	@SuppressWarnings("deprecation")
@@ -85,6 +93,10 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
         
         placeButton = (Button) findViewById(R.id.placeButton);
         cd = new ConnectionDetector(getApplicationContext());
+        
+        dUser = this.getResources().getDrawable(R.drawable.user);
+        dCenter = this.getResources().getDrawable(R.drawable.center);
+        dBoundary = this.getResources().getDrawable(R.drawable.boundary);
 
 		// Check if Internet present
 		isInternetPresent = cd.isConnectingToInternet();
@@ -214,15 +226,11 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 	public void updateCenter(MapView mapView) {
         mapOverlays = mapView.getOverlays();
         mapOverlays.clear();
-        
-        mapOverlays.addAll(questPoints);
-        
         // Geopoint to place on map
         geoPoint = mapView.getMapCenter();
  
         // Drawable marker icon
-        Drawable drawable = this.getResources()
-                .getDrawable(R.drawable.center);
+        Drawable drawable = dUser;
  
         itemizedOverlay = new AddItemizedOverlay(drawable, this);
  
@@ -231,8 +239,11 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
                 "Please place this point.");
  
         itemizedOverlay.addOverlay(overlayitem);
- 
         mapOverlays.add(itemizedOverlay);
+        for (OverlayItem oi : questPoints) {
+        	itemizedOverlay.addOverlay(oi);
+        	mapOverlays.add(itemizedOverlay);
+        }
         itemizedOverlay.populateNow();
 	}
 	
@@ -246,11 +257,20 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 	public void onClick(View v) {
 		if (v.getId() == R.id.placeButton) {
 			if (placeButton.getText().equals("Save Boundaries")) {
-				new LoadPlaces().execute();
+				Intent getPlacesIntent = new Intent(this,GetPlacesActivity.class);
+				pDialog = new ProgressDialog(this);
+				pDialog.setMessage(Html.fromHtml("<b>Search</b><br/>Loading Places..."));
+		        pDialog.setIndeterminate(false);
+		        pDialog.setCancelable(false);
+		        pDialog.show();
+				startActivityForResult(getPlacesIntent,3);
 			}
 			else {
 				if (questPoints.size() < 5) {
-					questPoints.addAll(mapOverlays);
+			        GeoPoint gp = mapView.getMapCenter();
+			        OverlayItem oi = new OverlayItem(gp, "Point",
+			                "Please place this point.");
+			        questPoints.add(oi);
 				}
 				if (questPoints.size() == 5) {
 					placeButton.setText("Save Boundaries");
@@ -265,129 +285,12 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 		}
 	}
 	
-    /**
-     * Background Async Task to Load Google places
-     * */
-    class LoadPlaces extends AsyncTask<String, String, String> {
- 
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(CreateQuestActivity.this);
-            pDialog.setMessage(Html.fromHtml("<b>Search</b><br/>Loading Places..."));
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
- 
-        /**
-         * getting Places JSON
-         * */
-        protected String doInBackground(String... args) {
-            // creating Places class object
-            googlePlaces = new GooglePlaces();
- 
-            try {
-                // Separeate your place types by PIPE symbol "|"
-                // If you want all types places make it as null
-                // Check list of types supported by google
-                //
-                String types = null; // Listing places only cafes, restaurants
- 
-                // Radius in meters - increase this value if you don't find any places
-                double radius = 1000; // 1000 meters 
- 
-                // get nearest places
-                nearPlaces = googlePlaces.search(gps.getLatitude(),
-                        gps.getLongitude(), radius, types);
- 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
- 
-        /**
-         * After completing background task Dismiss the progress dialog
-         * and show the data in UI
-         * Always use runOnUiThread(new Runnable()) to update UI from background
-         * thread, otherwise you will get error
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog after getting all products
-            pDialog.dismiss();
-            // updating UI from Background Thread
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    /**
-                     * Updating parsed Places into LISTVIEW
-                     * */
-                    // Get json response status
-                    String status = nearPlaces.status;
- 
-                    // Check for all possible status
-                    if(status.equals("OK")){
-                        // Successfully got places details
-                        if (nearPlaces.results != null) {
-                            // loop through each place
-                            for (Place p : nearPlaces.results) {
-                                HashMap<String, String> map = new HashMap<String, String>();
- 
-                                // Place reference won't display in listview - it will be hidden
-                                // Place reference is used to get "place full details"
-                                map.put(KEY_REFERENCE, p.reference);
- 
-                                // Place name
-                                map.put(KEY_NAME, p.name);
- 
-                                // adding HashMap to ArrayList
-                                placesListItems.add(map);
-                            }
-                        }
-                    }
-                    else if(status.equals("ZERO_RESULTS")){
-                        // Zero results found
-                        alert.showAlertDialog(CreateQuestActivity.this, "Near Places",
-                                "Sorry no places found. Try to change the types of places",
-                                false);
-                    }
-                    else if(status.equals("UNKNOWN_ERROR"))
-                    {
-                        alert.showAlertDialog(CreateQuestActivity.this, "Places Error",
-                                "Sorry unknown error occured.",
-                                false);
-                    }
-                    else if(status.equals("OVER_QUERY_LIMIT"))
-                    {
-                        alert.showAlertDialog(CreateQuestActivity.this, "Places Error",
-                                "Sorry query limit to google places is reached",
-                                false);
-                    }
-                    else if(status.equals("REQUEST_DENIED"))
-                    {
-                        alert.showAlertDialog(CreateQuestActivity.this, "Places Error",
-                                "Sorry error occured. Request is denied",
-                                false);
-                    }
-                    else if(status.equals("INVALID_REQUEST"))
-                    {
-                        alert.showAlertDialog(CreateQuestActivity.this, "Places Error",
-                                "Sorry error occured. Invalid Request",
-                                false);
-                    }
-                    else
-                    {
-                        alert.showAlertDialog(CreateQuestActivity.this, "Places Error",
-                                "Sorry error occured.",
-                                false);
-                    }
-                }
-            });
- 
-        }
- 
-    }
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 3 && resultCode == 0) {
+		}
+		if (requestCode == 3 && resultCode == 1) {
+		}
+	}
 }

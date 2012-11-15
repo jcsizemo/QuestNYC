@@ -27,13 +27,8 @@ public class GetPlacesActivity extends Activity implements Runnable{
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		returnIntent = getIntent();
-		mContext = this.getApplicationContext();
-		pDialog = new ProgressDialog(mContext);
-		pDialog.setMessage(Html.fromHtml("<b>Search</b><br/>Loading Places..."));
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
-        pDialog.show();
         new Thread(this).start();
 	}
 	
