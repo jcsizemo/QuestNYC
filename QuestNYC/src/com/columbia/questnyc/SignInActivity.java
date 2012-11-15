@@ -1,7 +1,7 @@
 package com.columbia.questnyc;
 
 import com.columbia.places.MainActivity;
-import com.columbia.quest.create.CreateQuestActivity;
+import com.columbia.quest.QuestActivity;
 import com.columbia.server.ServerQuery;
 import com.columbia.server.SignInQuery;
 
@@ -17,6 +17,7 @@ public class SignInActivity extends Activity {
 	String nickname;
 	String email;
 	String password;
+	boolean isAdmin;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class SignInActivity extends Activity {
     			return;
     		}
     		if (R.id.signInButton == v.getId()) {
-    			SignInQuery sq = new SignInQuery(email,password,ServerQuery.POST,null);
+    			SignInQuery sq = new SignInQuery(this, email,password,ServerQuery.POST,null);
     			sq.execute();
     		}
     		else if (R.id.signUpButton == v.getId()) {
@@ -56,7 +57,18 @@ public class SignInActivity extends Activity {
 		if (requestCode == 2 && resultCode == 0) {
 			nickname = data.getStringExtra("Nickname");
 		}
-		SignInQuery sq = new SignInQuery(email,password,ServerQuery.POST,nickname);
+		SignInQuery sq = new SignInQuery(this,email,password,ServerQuery.POST,nickname);
 		sq.execute();
+	}
+	
+	public void process(boolean success, boolean isAdmin) {
+		if (success == true) {
+			Intent intent = new Intent(this, PlayOrCreateActivity.class);
+			intent.putExtra("isAdmin", isAdmin);
+			startActivity(intent);
+		}
+		else {
+			Toast.makeText(this,"Problems signing in. Please check your input information.", Toast.LENGTH_SHORT).show();
+		}
 	}
 }

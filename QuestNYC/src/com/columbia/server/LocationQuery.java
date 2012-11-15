@@ -1,5 +1,7 @@
 package com.columbia.server;
 
+import org.apache.http.HttpResponse;
+
 public class LocationQuery extends ServerQuery {
 
 	public void run() {
@@ -8,14 +10,14 @@ public class LocationQuery extends ServerQuery {
 	}
 
 	@Override
-	public void get() {
-		// TODO Auto-generated method stub
+	public HttpResponse get() {
+		return null;
 		
 	}
 
 	@Override
-	public void post() {
-		// TODO Auto-generated method stub
+	public HttpResponse post() {
+		return null;
 		
 	}
 

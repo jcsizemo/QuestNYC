@@ -38,7 +38,7 @@ public class PlacesMapActivity extends MapActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.single_place);
+        setContentView(R.layout.map_places);
  
         // Getting intent data
         Intent i = getIntent();
@@ -50,7 +50,7 @@ public class PlacesMapActivity extends MapActivity {
         // Nearplaces list
         nearPlaces = (PlacesList) i.getSerializableExtra("near_places");
  
-        mapView = (MapView) findViewById(R.id.mapview);
+        mapView = (MapView) findViewById(R.id.mapView);
         mapView.setBuiltInZoomControls(true);
  
         mapOverlays = mapView.getOverlays();

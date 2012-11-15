@@ -10,11 +10,17 @@ public class PlayOrCreateActivity extends Activity {
 	
 	Button deleteButton;
 	boolean isAdmin = false;
+	Button button = (Button) findViewById(R.id.deleteQuestButton);
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.play_or_create_layout);   
+        Intent intent = getIntent();
+        isAdmin = intent.getBooleanExtra("isAdmin", isAdmin);
+        setContentView(R.layout.play_or_create_layout);
+        if (!isAdmin) {
+        	button.setVisibility(View.INVISIBLE);
+        }
     }
 	
     public void onClick(View v) {

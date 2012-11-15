@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -33,6 +34,9 @@
         <activity android:name="com.columbia.server.ServerHelper"></activity>
         <activity android:name="PlayOrCreateActivity"></activity>
         <activity android:name="NicknameActivity"></activity>
+        <activity android:name="com.columbia.places.MainActivity"></activity>
+        <activity android:name="com.columbia.places.PlacesMapActivity"></activity>
+        <activity android:name="com.columbia.places.SinglePlaceActivity"></activity>
         </application>
 
 </manifest>
