@@ -6,7 +6,6 @@ import com.columbia.server.SignInQuery;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
@@ -28,7 +27,7 @@ public class SignInActivity extends Activity {
     
     public void onClick(View v) {
     	if (R.id.helpButton == v.getId()) {
-    		Intent intent = new Intent(this, CreateQuestActivity.class);
+    		Intent intent = new Intent(this, HelpActivity.class);
     		startActivity(intent);
     	}
     	else {
@@ -78,6 +77,7 @@ public class SignInActivity extends Activity {
 		if (success == true) {
 			Intent intent = new Intent(this, PlayOrCreateActivity.class);
 			intent.putExtra("isAdmin", isAdmin);
+			startActivity(intent);
 		}
 		else {
 			Toast.makeText(this,"Problems signing in. Please check your input information.", Toast.LENGTH_SHORT).show();

@@ -5,22 +5,29 @@
     tools:context="com.columbia.quest.QuestActivity" >
 
     <Button
-        android:id="@+id/playQuestButton"
+        android:id="@+id/playQuestAdminButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:onClick="onClick"
         android:text="@string/playquest" />
 
     <Button
-        android:id="@+id/createQuestButton"
+        android:id="@+id/createQuestAdminButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/playQuestButton"
+        android:layout_above="@+id/playQuestAdminButton"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp"
-        android:onClick="onClick"
         android:text="@string/createquest" />
+
+    <Button
+        android:id="@+id/deleteQuestAdminButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/createQuestAdminButton"
+        android:layout_below="@+id/playQuestAdminButton"
+        android:layout_marginTop="60dp"
+        android:text="@string/deletequest" />
 
 </RelativeLayout>

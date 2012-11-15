@@ -35,11 +35,12 @@ public class SignInQuery extends ServerQuery {
 	public boolean success = false;
 	public boolean isAdmin = false;
 	private Activity activity;
-	Intent intent;
+//	Intent intent;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Intent intent = getIntent();
+		super.onCreate(savedInstanceState);
+//		Intent intent = getIntent();
 		this.email = intent.getStringExtra("email");
 		this.password = intent.getStringExtra("password");
 		this.interactionType = intent.getIntExtra("interactionType",0);

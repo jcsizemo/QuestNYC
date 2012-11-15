@@ -5,6 +5,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 
 public abstract class ServerQuery extends Activity implements Runnable {
 	
@@ -13,6 +15,13 @@ public abstract class ServerQuery extends Activity implements Runnable {
 	public static final int POST = 1;
 	public HttpClient httpClient = new DefaultHttpClient();
 	public int interactionType;
+	public Intent intent;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		intent = getIntent();
+	}
 	
 	public HttpResponse get() {
 		return null;

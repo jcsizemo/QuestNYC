@@ -13,15 +13,15 @@
     <string name="rating">"What did you think of this quest?</string>
     <string name="regular_key">0sh0i4XC5lcHE4m5wt_o0gBPur4_GO5vU595X2g</string>
     <string name="debug_key">0sh0i4XC5lcF0n82pEXLAfYNQ4MYPk0O9mXHSmA</string>
-    <string name="create_quest">Create Quest</string>
-    <string name="play_quest">Play Quest</string>
-    <string name="delete_quest">Delete Quest</string>
+    <string name="createquest">Create Quest</string>
+    <string name="playquest">Play Quest</string>
+    <string name="deletequest">Delete Quest</string>
     <string name="signUp">Sign Up</string>
     <string name="goBack">Return</string>
     <string name="nickname">What\'s your name?</string>
     <string name="center">Center</string>
     <string name="boundary">Boundary</string>
-    <string name="placemarkers">Create a perimeter above. Pick four points to create a perimeter, then pick a center point within the perimeter.</string>
+    <string name="placemarkers">Create a perimeter above. Pick a center point, and then pick four points around it.</string>
     <string name="place">Place</string>
     <string name="startover">Start Over</string>
 
