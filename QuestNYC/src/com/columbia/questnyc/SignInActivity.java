@@ -1,7 +1,6 @@
 package com.columbia.questnyc;
 
-import com.columbia.places.MainActivity;
-import com.columbia.quest.QuestActivity;
+import com.columbia.quest.create.CreateQuestActivity;
 import com.columbia.server.ServerQuery;
 import com.columbia.server.SignInQuery;
 
@@ -27,7 +26,7 @@ public class SignInActivity extends Activity {
     
     public void onClick(View v) {
     	if (R.id.helpButton == v.getId()) {
-    		Intent intent = new Intent(this, MainActivity.class);
+    		Intent intent = new Intent(this, CreateQuestActivity.class);
     		startActivity(intent);
     	}
     	else {

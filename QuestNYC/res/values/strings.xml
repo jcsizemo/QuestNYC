@@ -19,5 +19,10 @@
     <string name="signUp">Sign Up</string>
     <string name="goBack">Return</string>
     <string name="nickname">What\'s your name?</string>
+    <string name="center">Center</string>
+    <string name="boundary">Boundary</string>
+    <string name="placemarkers">Create a perimeter above. Pick four points to create a perimeter, then pick a center point for your quest.</string>
+    <string name="place">Place</string>
+    <string name="startover">Start Over</string>
 
 </resources>

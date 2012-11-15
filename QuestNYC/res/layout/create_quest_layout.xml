@@ -4,15 +4,16 @@
     android:layout_height="match_parent" >
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         tools:context=".MainMenuActivity" />
-    
-        <com.google.android.maps.MapView
+
+    <com.google.android.maps.MapView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/mapview"
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -21,5 +22,33 @@
         android:apiKey="@string/debug_key"
         android:clickable="true" >
     </com.google.android.maps.MapView>
+
+    <TextView
+        android:id="@+id/placeInstructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mapView"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="50dp"
+        android:text="@string/placemarkers"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/placeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/placeInstructions"
+        android:layout_centerVertical="true"
+        android:onClick="onClick"
+        android:text="@string/place" />
+
+    <Button
+        android:id="@+id/startOverButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/placeButton"
+        android:layout_centerVertical="true"
+        android:onClick="onClick"
+        android:text="@string/startover" />
 
 </RelativeLayout>
