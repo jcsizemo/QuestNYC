@@ -1,27 +1,73 @@
 package com.columbia.server;
 
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import com.columbia.location.CenterPoint;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 import com.columbia.quest.Quest;
 import com.google.android.maps.GeoPoint;
 
 public class XMLHelper {
-	
-	public static void QuestToXml(Quest quest) {
-		CenterPoint c = quest.getCenter();
-		List<GeoPoint> points = quest.getBoundaries();
-		Map<String,String> questions = quest.getQuestions();
-		StringBuilder sb = new StringBuilder("<Quest>");
-		sb.append("<Center>" + (c.getLatitudeE6()/1000) + "," + (c.getLongitudeE6()/1000) + "</Center>");
-		for (GeoPoint gp : points) {
-			sb.append("<Boundary>" + (gp.getLatitudeE6()/1000) + "," + (gp.getLongitudeE6()/1000) + "</Boundary>");
-		}
-		for (String question : questions.keySet()) {
-			sb.append("<Question>" + question + "," + questions.get(question) + "</Question>");
-		}
-		sb.append("</Quest>");
-	}
 
+public static void main(String argv[]) {
+	
 }
+
+public List<Quest> XMLtoQuest(String xml){
+	List<Quest> questList = new ArrayList<Quest>();
+	
+	try {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilder db = dbf.newDocumentBuilder();
+        InputSource is = new InputSource(new StringReader(xml));
+		Document doc = db.parse(is);
+		doc.getDocumentElement().normalize();
+	  
+		NodeList nodeLst = doc.getElementsByTagName("quest");
+
+		for (int s = 0; s < nodeLst.getLength(); s++) {
+			Node fstNode = nodeLst.item(s);
+			if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+				  Element fstElmnt = (Element) fstNode;
+				  int id = Integer.parseInt(fstElmnt.getAttribute("id"));
+				  String name = fstElmnt.getAttribute("name");
+				  int longitude = (int) Double.parseDouble(fstElmnt.getAttribute("longitude"));
+				  int latitude = (int) Double.parseDouble(fstElmnt.getAttribute("latitude"));      
+				  float rating = Float.parseFloat(fstElmnt.getAttribute("rating"));
+				  float solvedRate = Float.parseFloat(fstElmnt.getAttribute("solvedRate"));
+          
+				  NodeList fstNmElmntLst = fstElmnt.getElementsByTagName("description");
+				  Element fstNmElmnt = (Element) fstNmElmntLst.item(0);
+				  NodeList fstNm = fstNmElmnt.getChildNodes();
+				  String description = ((Node) fstNm.item(0)).getNodeValue();
+				  
+				  ArrayList<GeoPoint> boundaries = new ArrayList<GeoPoint>();
+				  NodeList nlst = fstElmnt.getElementsByTagName("coordinate");
+				  for(int i = 0; i < nlst.getLength(); i++){
+					  Element myElmnt = (Element) nlst.item(i);
+					  int long1 = (int) Double.parseDouble(myElmnt.getAttribute("longitude"));
+					  int lat1 = (int) Double.parseDouble(myElmnt.getAttribute("latitude"));
+					  
+					  GeoPoint gp = new GeoPoint(long1, lat1);
+					  boundaries.add(gp);
+				  }
+				  
+				  Quest q = new Quest(id, name, description, longitude, latitude, boundaries, rating, solvedRate);
+				  questList.add(q);
+			  }
+		}
+	} catch (Exception e) {
+  	 e.printStackTrace();
+	}
+	return questList;
+	}
+}
+

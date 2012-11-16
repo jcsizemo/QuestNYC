@@ -8,6 +8,9 @@ import com.columbia.location.CenterPoint;
 import com.columbia.location.GPSHelper;
 import com.columbia.location.UserPoint;
 import com.columbia.questnyc.R;
+import com.columbia.server.QuestionQuery;
+import com.columbia.server.ServerQuery;
+import com.columbia.server.SignInQuery;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapActivity;
@@ -19,6 +22,7 @@ import com.google.android.maps.Projection;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -27,8 +31,11 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class AnswerQuestionActivity extends MapActivity {
 	
@@ -43,6 +50,7 @@ public class AnswerQuestionActivity extends MapActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.answer_question_layout);	// set layout
         
+        Quest quest = (Quest) getIntent().getSerializableExtra("quest");
         mapView = (MapView) findViewById(R.id.mapview); // get Map view
         mapController = mapView.getController();
         projection = mapView.getProjection();
@@ -64,10 +72,8 @@ public class AnswerQuestionActivity extends MapActivity {
         params.height = height/3;		// set map view to be 1/3 of the screen height
         mapView.setLayoutParams(params);
         
-        Quest quest = new Quest();
-        
-        Map<String,String> questions = quest.questions;
-        List<GeoPoint> boundaries = quest.boundaries;
+//        Map<String,String> questions = quest.;
+        List<GeoPoint> boundaries = quest.getBoundaries();
 
         List<Overlay> mapOverlays = mapView.getOverlays();
         Drawable dCenter = this.getResources().getDrawable(R.drawable.center);
@@ -88,7 +94,7 @@ public class AnswerQuestionActivity extends MapActivity {
         }
         
         qOverlay = new QuestOverlay(dCenter,this);
-        CenterPoint c = quest.center;
+        CenterPoint c = quest.getCenter();
         o = new OverlayItem(c, null, null);
         qOverlay.addOverlay(o);
         mapOverlays.add(qOverlay);
@@ -119,6 +125,27 @@ public class AnswerQuestionActivity extends MapActivity {
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
+	}
+	
+	public void onClick(View v) {
+		if (v.getId() == R.id.answerQuestionButton) {
+			EditText questionAnswer = (EditText) findViewById(R.id.answerQuestionField);
+			String answer = questionAnswer.getText().toString();
+			if ("".equals(answer)) {
+				Toast.makeText(this, "No answer", Toast.LENGTH_SHORT).show();
+			}
+			Intent answerIntent = new Intent(this,QuestionQuery.class);
+			answerIntent.putExtra("answer", answer);
+			startActivityForResult(answerIntent,5);
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 5 && resultCode == 0) {
+			
+		}
 	}
 	
 	class QuestOverlay extends ItemizedOverlay<OverlayItem> {
@@ -196,7 +223,6 @@ public class AnswerQuestionActivity extends MapActivity {
 		public void addOverlay(OverlayItem overlay) {
 			mOverlays.add(overlay);
 			populate();
-		}
-		
+		}	
 	}
 }

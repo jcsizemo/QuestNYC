@@ -26,6 +26,7 @@ public class ServerHelper extends Activity implements Runnable {
 	Double lati;
 	Double longi;
 	String address = "54.243.134.140";
+	static String sessionID = "";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

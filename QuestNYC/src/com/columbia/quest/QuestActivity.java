@@ -1,10 +1,8 @@
 package com.columbia.quest;
 
 import com.columbia.location.GPSHelper;
-import com.columbia.questnyc.R;
 import com.columbia.server.QuestQuery;
 import com.columbia.server.ServerQuery;
-import com.columbia.server.SignInQuery;
 import com.google.android.maps.GeoPoint;
 
 import android.app.ListActivity;

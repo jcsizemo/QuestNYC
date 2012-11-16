@@ -41,6 +41,7 @@
         <activity android:name="com.columbia.places.GetPlacesActivity"></activity>
         <activity android:name="com.columbia.quest.AdminQuestActivity"></activity>
         <activity android:name="com.columbia.server.QuestQuery"></activity>
+        <activity android:name="com.columbia.server.QuestionQuery"></activity>
         </application>
 
 </manifest>

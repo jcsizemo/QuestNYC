@@ -5,7 +5,6 @@ import com.columbia.server.QuestQuery;
 import com.columbia.server.ServerQuery;
 import com.google.android.maps.GeoPoint;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +40,5 @@ public class AdminQuestActivity extends ListActivity {
 	
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		int stop = 1;
 	}
 }

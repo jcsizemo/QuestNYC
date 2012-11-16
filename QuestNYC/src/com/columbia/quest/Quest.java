@@ -11,25 +11,56 @@ import com.google.android.maps.GeoPoint;
 
 public class Quest implements Serializable {
 	
-	Map<String,String> questions;
-	List<GeoPoint> boundaries;
-	CenterPoint center;
+	private int id;
+	private String name;
+	private String description;
+	private List<GeoPoint> boundaries = new ArrayList<GeoPoint>();
+	private CenterPoint center;
+	private float rating;
+	private float solvedRate;
+	CenterPoint c;
+	Map<String,String> questions = new HashMap<String,String>();
+	
+	public Quest(int id, String name, String description, int longitude, int latitude, ArrayList<GeoPoint> boundaries, float rating, float solvedRate){
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.center = new CenterPoint(longitude, latitude);
+		this.boundaries = boundaries;
+		this.rating = rating;
+		this.solvedRate = solvedRate;
+	}
 	
 	public Quest() {
-		questions = new HashMap<String,String>();
-		boundaries = new ArrayList<GeoPoint>();
+		
 	}
 	
-	public void addBoundary(GeoPoint gp) {
-		boundaries.add(gp);
+	public int getId(){
+		return id;
 	}
 	
-	public void setCenter(GeoPoint gp) {
-		center = new CenterPoint(gp.getLatitudeE6(), gp.getLongitudeE6());
+	public String getName(){
+		return name;
 	}
 	
-	public CenterPoint getCenter() {
+	public String getDescription(){
+		return description;
+	}
+	
+	public CenterPoint getCenter(){
 		return center;
+	}
+	
+	public List<GeoPoint> getBoundaries(){
+		return boundaries;
+	}
+	
+	public float rating(){
+		return rating;
+	}
+	
+	public float solvedRate(){
+		return solvedRate;
 	}
 	
 	public void addQuestion(String question, String answer) {
@@ -40,8 +71,12 @@ public class Quest implements Serializable {
 		return questions;
 	}
 	
-	public List<GeoPoint> getBoundaries() {
-		return boundaries;
+	public void addBoundary(GeoPoint gp) {
+		boundaries.add(gp);
+	}
+	
+	public void setCenter(GeoPoint c) {
+		center = new CenterPoint(c.getLatitudeE6(),c.getLongitudeE6());
 	}
 
 }
