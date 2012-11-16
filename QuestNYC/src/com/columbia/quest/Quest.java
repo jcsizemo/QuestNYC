@@ -96,7 +96,7 @@ public class Quest implements Serializable {
 		for (int i = 0; i < 4; i++) {
 			int latitude = intent.getIntExtra("bound" + i + "Lat", 0);
 			int longitude = intent.getIntExtra("bound" + i + "Long", 0);
-			returnList.add(new BoundaryPoint((int) (latitude * 1E6),(int) (longitude * 1E6)));
+			returnList.add(new BoundaryPoint((int) (latitude),(int) (longitude)));
 		}
 		return returnList;
 	}
@@ -104,7 +104,7 @@ public class Quest implements Serializable {
 	public static CenterPoint getCenterPoint(Intent intent) {
 		int latitude = intent.getIntExtra("centerLat", 0);
 		int longitude = intent.getIntExtra("centerLong", 0);
-		return new CenterPoint((int) (latitude * 1E6),(int) (longitude * 1E6));
+		return new CenterPoint((int) (latitude),(int) (longitude));
 	}
 
 }

@@ -316,6 +316,8 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 			initIntent.putExtra("description", description);
 			initIntent.putExtra("interactionType", ServerQuery.GET);
 			initIntent = Quest.addQuestPoints(quest, initIntent);
+			int cLat = initIntent.getIntExtra("centerLat", 0);
+			int cLong = initIntent.getIntExtra("centerLong", 0);
 			startActivityForResult(initIntent,5);
 		}
 		if (requestCode == 5 && resultCode == 0) {
