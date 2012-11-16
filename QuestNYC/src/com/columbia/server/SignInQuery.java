@@ -90,6 +90,7 @@ public class SignInQuery extends ServerQuery {
 			jsonResponse = new JSONObject(ServerHelper.getResponseBody(entity));
 			success = jsonResponse.getBoolean("success");
 			isAdmin = jsonResponse.getBoolean("admin");
+			ServerHelper.sessionID = jsonResponse.getString("sessionID");
 		} 
 		catch (ParseException e) {
 			

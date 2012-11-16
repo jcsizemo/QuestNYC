@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class QuestActivity extends ListActivity {
 
@@ -25,7 +26,7 @@ public class QuestActivity extends ListActivity {
 		intent.putExtra("latitude", latitude);
 		intent.putExtra("longitude", longitude);
 		intent.putExtra("interactionType", ServerQuery.GET);
-		String[] test = {"ABC","DEF","GHI"};
+		String[] test = {"Columbia Quest"};
 		this.setListAdapter(new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, test));
 		startActivityForResult(intent, 3);
@@ -40,6 +41,6 @@ public class QuestActivity extends ListActivity {
 	
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		int stop = 1;
+		
 	}
 }
