@@ -51,18 +51,20 @@ public class QuestionActivity extends ListActivity {
 					android.R.layout.simple_list_item_1, questionLabels.toArray()));
 		}
 		if (requestCode == 5 && resultCode == 0) {
-			boolean isCorrect = data.getBooleanExtra("correct", false);
-			boolean hasFinished = true;
-			if (isCorrect) {
-				for (Question q : questions) {
-					if (q.getSolved() == false) {
-						hasFinished = q.getSolved();
+			if (data != null) {
+				boolean isCorrect = data.getBooleanExtra("correct", false);
+				boolean hasFinished = true;
+				if (isCorrect) {
+					for (Question q : questions) {
+						if (q.getSolved() == false) {
+							hasFinished = q.getSolved();
+						}
 					}
-				}
-				if (hasFinished) {
-					Intent rateIntent = new Intent(this, RatingActivity.class);
-					rateIntent.putExtra("questId", questId);
-					startActivityForResult(rateIntent,7);
+					if (hasFinished) {
+						Intent rateIntent = new Intent(this, RatingActivity.class);
+						rateIntent.putExtra("questId", questId);
+						startActivityForResult(rateIntent,7);
+					}
 				}
 			}
 		}
