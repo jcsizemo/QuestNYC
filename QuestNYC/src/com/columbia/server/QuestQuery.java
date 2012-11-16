@@ -23,8 +23,8 @@ import android.webkit.CookieSyncManager;
 
 public class QuestQuery extends ServerQuery {
 	
-	int latitude;
-	int longitude;
+	double latitude;
+	double longitude;
 	String query;
 	int interactionType;
 	Intent intent;
@@ -34,8 +34,8 @@ public class QuestQuery extends ServerQuery {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		intent = getIntent();
-		latitude = intent.getIntExtra("latitude", 0);
-		longitude = intent.getIntExtra("longitude", 0);
+		latitude = intent.getDoubleExtra("latitude", 0);
+		longitude = intent.getDoubleExtra("longitude", 0);
 		interactionType = intent.getIntExtra("interactionType",0);
 		this.execute();
 	}

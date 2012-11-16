@@ -40,10 +40,14 @@ public class XMLHelper {
 						Element fstElmnt = (Element) fstNode;
 						int id = Integer.parseInt(fstElmnt.getAttribute("id"));
 						String name = fstElmnt.getAttribute("name");
-						int longitude = (int) Double.parseDouble(fstElmnt
+						double longitude = Double.parseDouble(fstElmnt
 								.getAttribute("longitude"));
-						int latitude = (int) Double.parseDouble(fstElmnt
+						double latitude = Double.parseDouble(fstElmnt
 								.getAttribute("latitude"));
+						longitude *= 1E6;
+						latitude *= 1E6;
+						int lat = (int) latitude;
+						int lon = (int) longitude;
 						float rating = Float.parseFloat(fstElmnt
 								.getAttribute("rating"));
 						float solvedRate = Float.parseFloat(fstElmnt
@@ -70,8 +74,8 @@ public class XMLHelper {
 							boundaries.add(gp);
 						}
 
-						Quest q = new Quest(id, name, description, longitude,
-								latitude, boundaries, rating, solvedRate);
+						Quest q = new Quest(id, name, description, lon,
+								lat, boundaries, rating, solvedRate);
 						questList.add(q);
 					}
 				}

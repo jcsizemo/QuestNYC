@@ -24,8 +24,8 @@ public class QuestActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		GeoPoint gp = GPSHelper.getLocation(this);
-		int latitude = (int) (gp.getLatitudeE6() / 1E6);
-		int longitude = (int) (gp.getLongitudeE6() / 1E6);
+		double latitude = gp.getLatitudeE6() / 1E6;
+		double longitude = gp.getLongitudeE6() / 1E6;
 		Intent intent = new Intent(this, QuestQuery.class);
 		intent.putExtra("latitude", latitude);
 		intent.putExtra("longitude", longitude);

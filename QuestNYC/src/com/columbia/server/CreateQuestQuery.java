@@ -23,8 +23,8 @@ public class CreateQuestQuery extends ServerQuery {
 	int interactionType;
 	String name;
 	String description;
-	String cLat;
-	String cLong;
+	double cLat;
+	double cLong;
 	String b1Lat;
 	String b1Long;
 	String b2Lat;
@@ -50,8 +50,8 @@ public class CreateQuestQuery extends ServerQuery {
 		description = description.replaceAll(" ", "_");
 		CenterPoint c = Quest.getCenterPoint(intent);
 		List<BoundaryPoint> bounds = Quest.getBoundaryPoints(intent);
-		cLat = c.getLatitudeE6() + "";
-		cLong = c.getLongitudeE6() + "";
+		cLat = c.getLatitudeE6() / 1E6;
+		cLong = c.getLongitudeE6() / 1E6;
 		b1Lat = bounds.get(0).getLatitudeE6() + "";
 		b1Long = bounds.get(0).getLongitudeE6() + "";
 		b2Lat = bounds.get(1).getLatitudeE6() + "";
