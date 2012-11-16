@@ -1,8 +1,6 @@
 package com.columbia.server;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +16,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.columbia.questnyc.SignInActivity;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 
 public class SignInQuery extends ServerQuery {
 	
@@ -34,13 +26,10 @@ public class SignInQuery extends ServerQuery {
 	private String query;
 	public boolean success = false;
 	public boolean isAdmin = false;
-	private Activity activity;
-//	Intent intent;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		Intent intent = getIntent();
 		this.email = intent.getStringExtra("email");
 		this.password = intent.getStringExtra("password");
 		this.interactionType = intent.getIntExtra("interactionType",0);

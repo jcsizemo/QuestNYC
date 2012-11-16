@@ -1,12 +1,12 @@
 package com.columbia.questnyc;
 
+import com.columbia.quest.QuestActivity;
 import com.columbia.quest.create.CreateQuestActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 public class PlayOrCreateActivity extends Activity {
 	
@@ -26,7 +26,7 @@ public class PlayOrCreateActivity extends Activity {
     		startActivity(intent);
     	}
     	else if (R.id.playQuestButton == v.getId()) {
-    		Intent intent = new Intent(this, PlayOrCreateActivity.class);
+    		Intent intent = new Intent(this, QuestActivity.class);
     		startActivity(intent);
     	}
     }

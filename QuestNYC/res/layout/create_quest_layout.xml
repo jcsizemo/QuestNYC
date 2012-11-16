@@ -99,12 +99,23 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
-        android:id="@+id/submitButton"
+        android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/numberOfQuestionsLabel"
         android:layout_alignBottom="@+id/numberOfQuestionsLabel"
         android:layout_toRightOf="@+id/numberOfQuestionsLabel"
+        android:onClick="onClick"
+        android:text="@string/add" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/addButton"
+        android:layout_alignBottom="@+id/addButton"
+        android:layout_toRightOf="@+id/addButton"
+        android:onClick="onClick"
         android:text="@string/submit" />
 
 </RelativeLayout>

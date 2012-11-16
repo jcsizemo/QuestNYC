@@ -13,7 +13,10 @@ import com.columbia.places.GetPlacesActivity;
 import com.columbia.places.GooglePlaces;
 import com.columbia.places.Place;
 import com.columbia.places.PlacesList;
+import com.columbia.quest.Quest;
+import com.columbia.quest.QuestActivity;
 import com.columbia.questnyc.R;
+import com.columbia.server.ServerQuery;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -39,6 +42,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CreateQuestActivity extends MapActivity implements OnTouchListener {
 	
@@ -85,8 +89,10 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
     TextView answerLabel;
     EditText answerField;
     TextView numberOfQuestionsLabel;
+    Button addButton;
     Button submitButton;
     
+    Quest quest = new Quest();
     List<OverlayItem> questPoints = new ArrayList<OverlayItem>();
 	
 	@SuppressWarnings("deprecation")
@@ -104,13 +110,16 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
         answerLabel = (TextView) findViewById(R.id.answerLabel);
         answerField = (EditText) findViewById(R.id.answerField);
         numberOfQuestionsLabel = (TextView) findViewById(R.id.numberOfQuestionsLabel);
+        addButton = (Button) findViewById(R.id.addButton);
         submitButton = (Button) findViewById(R.id.submitButton);
+        
         
         questionLabel.setVisibility(View.INVISIBLE);
         questionField.setVisibility(View.INVISIBLE);
         answerLabel.setVisibility(View.INVISIBLE);
         answerField.setVisibility(View.INVISIBLE);
         numberOfQuestionsLabel.setVisibility(View.INVISIBLE);
+        addButton.setVisibility(View.INVISIBLE);
         submitButton.setVisibility(View.INVISIBLE);
         
         cd = new ConnectionDetector(getApplicationContext());
@@ -267,6 +276,21 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 			questPoints.clear();
 			mapView.invalidate();
 		}
+		else if (v.getId() == R.id.addButton) {
+			String question = questionField.getText().toString();
+			String answer = answerField.getText().toString();
+			if ("".equals(question) || "".equals(answer)) {
+				Toast.makeText(this, "Question or answer blank", Toast.LENGTH_SHORT).show();
+			}
+			quest.addQuestion(question, answer);
+			numberOfQuestionsLabel.setText(quest.getQuestions().size() + " questions");
+		}
+		else if (v.getId() == R.id.submitButton) {
+			Intent intent = new Intent(this, QuestActivity.class);
+			intent.putExtra("quest", quest);
+			intent.putExtra("interactionType", ServerQuery.POST);
+			startActivityForResult(intent,4);
+		}
 	}
 	
 	@Override
@@ -278,6 +302,9 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 			populateMap(nearPlaces, placesListItems);
 		}
 		if (requestCode == 3 && resultCode == 1) {
+		}
+		if (requestCode == 4 && resultCode == 0) {
+			
 		}
 	}
 
@@ -303,8 +330,8 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 						(int) (longitude * 1E6));
 
 				// Map overlay item
-				OverlayItem oi = new OverlayItem(gp, place.name,
-						place.vicinity);
+				OverlayItem oi = new OverlayItem(gp, place.name + ", " + place.vicinity,
+						latitude + ", " + longitude);
 
 				aio.addOverlay(oi);
 
@@ -337,6 +364,16 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
         answerLabel.setVisibility(View.VISIBLE);
         answerField.setVisibility(View.VISIBLE);
         numberOfQuestionsLabel.setVisibility(View.VISIBLE);
+        addButton.setVisibility(View.VISIBLE);
         submitButton.setVisibility(View.VISIBLE);
+        
+        for (OverlayItem oi : questPoints) {
+        	if (questPoints.indexOf(oi) == 0) {
+        		quest.setCenter(oi.getPoint());
+        	}
+        	else {
+        		quest.addBoundary(oi.getPoint());
+        	}
+        }
 	}
 }

@@ -39,6 +39,7 @@
         <activity android:name="com.columbia.places.SinglePlaceActivity"></activity>
         <activity android:name="com.columbia.server.SignInQuery"></activity>
         <activity android:name="com.columbia.places.GetPlacesActivity"></activity>
+        <activity android:name="com.columbia.quest.AdminQuestActivity"></activity>
         </application>
 
 </manifest>
