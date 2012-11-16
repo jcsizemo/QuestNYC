@@ -2,6 +2,7 @@ package com.columbia.quest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.columbia.location.CenterPoint;
 import com.columbia.location.GPSHelper;
@@ -63,32 +64,56 @@ public class AnswerQuestionActivity extends MapActivity {
         params.height = height/3;		// set map view to be 1/3 of the screen height
         mapView.setLayoutParams(params);
         
-        List<Overlay> mapOverlays = mapView.getOverlays();
-        Drawable drawable = this.getResources().getDrawable(R.drawable.post);
-        QuestOverlay qOverlay = new QuestOverlay(drawable,this);
+        Quest quest = new Quest();
         
+        Map<String,String> questions = quest.questions;
+        List<GeoPoint> boundaries = quest.boundaries;
+
+        List<Overlay> mapOverlays = mapView.getOverlays();
+        Drawable dCenter = this.getResources().getDrawable(R.drawable.center);
+        Drawable dUser = this.getResources().getDrawable(R.drawable.user);
+        Drawable dBoundary = this.getResources().getDrawable(R.drawable.boundary);
+        
+        QuestOverlay qOverlay = new QuestOverlay(dUser,this);
         UserPoint user = GPSHelper.getLocation(this);
-        CenterPoint center = new CenterPoint(40807090,-73962710);
-        GeoPoint b1 = new GeoPoint(40810530,-73962190);
-        GeoPoint b2 = new GeoPoint(40809290,-73959360);
-        GeoPoint b3 = new GeoPoint(40804190,-73962920);
-        GeoPoint b4 = new GeoPoint(40805460,-73965840);
-        mapController.animateTo(center);
-        mapController.setZoom(16);
-        mapView.invalidate();
-        OverlayItem item = new OverlayItem(b1, null, null);
-        OverlayItem item2 = new OverlayItem(b2, null, null);
-        OverlayItem item3 = new OverlayItem(b3, null, null);
-        OverlayItem item4 = new OverlayItem(b4, null, null);
-        OverlayItem item5 = new OverlayItem(center, null, null);
-        OverlayItem item6 = new OverlayItem(user,null,null);
-        qOverlay.addOverlay(item);
-        qOverlay.addOverlay(item2);
-        qOverlay.addOverlay(item3);
-        qOverlay.addOverlay(item4);
-        qOverlay.addOverlay(item5);
-        qOverlay.addOverlay(item6);
+        OverlayItem o = new OverlayItem(user, null, null);
+        qOverlay.addOverlay(o);
         mapOverlays.add(qOverlay);
+        
+        qOverlay = new QuestOverlay(dBoundary,this);
+        for (GeoPoint gp : boundaries) {
+        	o = new OverlayItem(gp,null,null);
+        	qOverlay.addOverlay(o);
+        	mapOverlays.add(qOverlay);
+        }
+        
+        qOverlay = new QuestOverlay(dCenter,this);
+        CenterPoint c = quest.center;
+        o = new OverlayItem(c, null, null);
+        qOverlay.addOverlay(o);
+        mapOverlays.add(qOverlay);
+        
+//        CenterPoint center = new CenterPoint(40807090,-73962710);
+//        GeoPoint b1 = new GeoPoint(40810530,-73962190);
+//        GeoPoint b2 = new GeoPoint(40809290,-73959360);
+//        GeoPoint b3 = new GeoPoint(40804190,-73962920);
+//        GeoPoint b4 = new GeoPoint(40805460,-73965840);
+//        mapController.animateTo(center);
+//        mapController.setZoom(16);
+//        mapView.invalidate();
+//        OverlayItem item = new OverlayItem(b1, null, null);
+//        OverlayItem item2 = new OverlayItem(b2, null, null);
+//        OverlayItem item3 = new OverlayItem(b3, null, null);
+//        OverlayItem item4 = new OverlayItem(b4, null, null);
+//        OverlayItem item5 = new OverlayItem(center, null, null);
+//        OverlayItem item6 = new OverlayItem(user,null,null);
+//        qOverlay.addOverlay(item);
+//        qOverlay.addOverlay(item2);
+//        qOverlay.addOverlay(item3);
+//        qOverlay.addOverlay(item4);
+//        qOverlay.addOverlay(item5);
+//        qOverlay.addOverlay(item6);
+//        mapOverlays.add(qOverlay);
     }
 
 	@Override

@@ -7,9 +7,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -32,7 +29,7 @@ public class QuestQuery extends ServerQuery {
 
 	public void run() {
 		
-		query = address + ":7000/loadquest/?latitude=" + 40 + "&longtide=" + -73;
+		query = address + "/loadquest/?latitude=" + 40 + "&longitude=" + -73;
 		
 		HttpResponse response = null;
 		if (ServerQuery.GET == interactionType) {

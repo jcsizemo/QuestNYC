@@ -28,12 +28,20 @@ public class Quest implements Serializable {
 		center = new CenterPoint(gp.getLatitudeE6(), gp.getLongitudeE6());
 	}
 	
+	public CenterPoint getCenter() {
+		return center;
+	}
+	
 	public void addQuestion(String question, String answer) {
 		questions.put(question, answer);
 	}
 	
 	public Map<String,String> getQuestions() {
 		return questions;
+	}
+	
+	public List<GeoPoint> getBoundaries() {
+		return boundaries;
 	}
 
 }

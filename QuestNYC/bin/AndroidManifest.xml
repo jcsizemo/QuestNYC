@@ -40,6 +40,7 @@
         <activity android:name="com.columbia.server.SignInQuery"></activity>
         <activity android:name="com.columbia.places.GetPlacesActivity"></activity>
         <activity android:name="com.columbia.quest.AdminQuestActivity"></activity>
+        <activity android:name="com.columbia.server.QuestQuery"></activity>
         </application>
 
 </manifest>
