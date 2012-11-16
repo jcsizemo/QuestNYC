@@ -45,7 +45,9 @@ public class CreateQuestQuery extends ServerQuery {
 	
 	public void run() {
 		name = intent.getStringExtra("name");
+		name = name.replaceAll(" ", "_");
 		description = intent.getStringExtra("description");
+		description = description.replaceAll(" ", "_");
 		CenterPoint c = Quest.getCenterPoint(intent);
 		List<BoundaryPoint> bounds = Quest.getBoundaryPoints(intent);
 		cLat = c.getLatitudeE6() + "";

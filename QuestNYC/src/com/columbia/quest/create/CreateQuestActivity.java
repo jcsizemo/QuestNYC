@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.columbia.location.BoundaryPoint;
 import com.columbia.location.CenterPoint;
 import com.columbia.places.AddItemizedOverlay;
 import com.columbia.places.AlertDialogManager;
@@ -16,7 +15,6 @@ import com.columbia.places.GooglePlaces;
 import com.columbia.places.Place;
 import com.columbia.places.PlacesList;
 import com.columbia.quest.Quest;
-import com.columbia.quest.QuestActivity;
 import com.columbia.questnyc.R;
 import com.columbia.server.CreateQuestQuery;
 import com.columbia.server.CreateQuestionQuery;
@@ -309,15 +307,11 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 		if (requestCode == 4 && resultCode == 0) {
 			String name = data.getStringExtra("name");
 			String description = data.getStringExtra("description");
-			List<GeoPoint> boundaries = quest.getBoundaries();
-			CenterPoint c = quest.getCenter();
 			Intent initIntent = new Intent(this,CreateQuestQuery.class);
 			initIntent.putExtra("name", name);
 			initIntent.putExtra("description", description);
 			initIntent.putExtra("interactionType", ServerQuery.GET);
 			initIntent = Quest.addQuestPoints(quest, initIntent);
-			int cLat = initIntent.getIntExtra("centerLat", 0);
-			int cLong = initIntent.getIntExtra("centerLong", 0);
 			startActivityForResult(initIntent,5);
 		}
 		if (requestCode == 5 && resultCode == 0) {
@@ -334,7 +328,7 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 			}
 		}
 		if (requestCode == 6 && resultCode == 0) {
-			Toast.makeText(this, "Quest created!", Toast.LENGTH_SHORT);
+			Toast.makeText(this, "Quest created!", Toast.LENGTH_SHORT).show();
 			finish();
 		}
 	}

@@ -33,7 +33,6 @@ public class QuestQuery extends ServerQuery {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		intent = getIntent();
 		latitude = intent.getIntExtra("latitude", 0);
 		longitude = intent.getIntExtra("longitude", 0);
@@ -42,7 +41,7 @@ public class QuestQuery extends ServerQuery {
 	}
 
 	public void run() {
-		query = address + "/loadquest/?latitude=" + 40 + "&longitude=" + -73 + "&username=" + ServerHelper.email + "&password=" + ServerHelper.password;
+		query = address + "/loadquest/?latitude=" + latitude + "&longitude=" + longitude + "&username=" + ServerHelper.email + "&password=" + ServerHelper.password;
 		
 		HttpResponse response = null;
 		if (ServerQuery.GET == interactionType) {

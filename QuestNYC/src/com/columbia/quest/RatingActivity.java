@@ -28,7 +28,7 @@ public class RatingActivity extends Activity {
 	
     public void onClick(View v) {
     	RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
-    	float rating = Math.round(rb.getRating() * 5);
+    	float rating = rb.getRating();
     	Intent intent = new Intent(this, RatingQuery.class);
     	intent.putExtra("rating", rating);
     	intent.putExtra("interactionType", ServerQuery.GET);

@@ -17,7 +17,7 @@ public class RatingQuery extends ServerQuery {
 	String query;
 	int interactionType;
 	int questId;
-	int rating;
+	float rating;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class RatingQuery extends ServerQuery {
 		intent = getIntent();
 		questId = intent.getIntExtra("questId", 0);
 		interactionType = intent.getIntExtra("interactionType",0);
-		rating = intent.getIntExtra("rating", 0);
+		rating = intent.getFloatExtra("rating", 0);
 		this.execute();
 	}
 	
