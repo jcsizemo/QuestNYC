@@ -31,7 +31,7 @@ public class AnswerQuery extends ServerQuery {
 	}
 	
 	public void run() {
-		answer = answer.replace(" ", "&nbsp;");
+		answer = answer.replaceAll(" ", "_");;
 		query = address + "/answerquestion/?questionid=" + questionId + "&answer=" + answer + "&username=" + ServerHelper.email + "&password=" + ServerHelper.password;
 		
 		HttpResponse response = null;
