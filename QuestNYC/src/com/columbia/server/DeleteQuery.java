@@ -1,48 +1,35 @@
 package com.columbia.server;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.cookie.BasicClientCookie;
 
-import com.columbia.quest.Quest;
-
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Bundle;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 
-public class QuestQuery extends ServerQuery {
+public class DeleteQuery extends ServerQuery {
 	
-	int latitude;
-	int longitude;
+	Intent intent;
 	String query;
 	int interactionType;
-	Intent intent;
+	int id;
 	
-	@TargetApi(12)
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		intent = getIntent();
-		latitude = intent.getIntExtra("latitude", 0);
-		longitude = intent.getIntExtra("longitude", 0);
+		id = intent.getIntExtra("id", 0);
 		interactionType = intent.getIntExtra("interactionType",0);
 		this.execute();
 	}
-
+	
 	public void run() {
-		query = address + "/loadquest/?latitude=" + 40 + "&longitude=" + -73 + "&username=" + ServerHelper.email + "&password=" + ServerHelper.password;
+		query = address + "/loadquestion/?questid=" + id + "&username=" + ServerHelper.email + "&password=" + ServerHelper.password;
 		
 		HttpResponse response = null;
 		if (ServerQuery.GET == interactionType) {
@@ -62,7 +49,7 @@ public class QuestQuery extends ServerQuery {
 		}
 
 		
-		intent.putExtra("quests", sResponse);
+		intent.putExtra("questions", sResponse);
     	setResult(0,intent);
     	finish();
 	}
@@ -80,7 +67,7 @@ public class QuestQuery extends ServerQuery {
 	}
 
 	@Override
-	public HttpResponse post() {	// creating a quest, posting to server
+	public HttpResponse post() { // check answer
 		return null;
 	}
 

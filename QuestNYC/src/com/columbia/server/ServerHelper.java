@@ -27,8 +27,9 @@ public class ServerHelper {
 	Double longi;
 	String address = "54.243.134.140";
 	static String sessionID = "";
-	static String email;
-	static String password;
+	public static String email;
+	public static String password;
+	public static boolean isAdmin;
 
 	public static String getResponseBody(final HttpEntity entity) throws IOException,
 			ParseException {

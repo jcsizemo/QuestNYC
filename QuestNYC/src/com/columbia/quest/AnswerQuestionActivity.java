@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.columbia.location.BoundaryPoint;
 import com.columbia.location.CenterPoint;
 import com.columbia.location.GPSHelper;
 import com.columbia.location.UserPoint;
@@ -42,6 +43,8 @@ public class AnswerQuestionActivity extends MapActivity {
 	MapView mapView;
 	MapController mapController;
 	Projection projection;
+	Intent intent;
+	List<Overlay> mapOverlays;
 	
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
@@ -49,9 +52,10 @@ public class AnswerQuestionActivity extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.answer_question_layout);	// set layout
-        
-        Quest quest = (Quest) getIntent().getSerializableExtra("quest");
         mapView = (MapView) findViewById(R.id.mapview); // get Map view
+        mapOverlays = mapView.getOverlays();
+        intent = getIntent();
+        
         mapController = mapView.getController();
         projection = mapView.getProjection();
         mapView.setBuiltInZoomControls(true); // zoomable
@@ -69,57 +73,37 @@ public class AnswerQuestionActivity extends MapActivity {
         	height = display.getHeight();
         }
         ViewGroup.LayoutParams params = mapView.getLayoutParams();
-        params.height = height/3;		// set map view to be 1/3 of the screen height
+        params.height = height/2;		// set map view to be 1/3 of the screen height
         mapView.setLayoutParams(params);
         
-//        Map<String,String> questions = quest.;
-        List<GeoPoint> boundaries = quest.getBoundaries();
-
         List<Overlay> mapOverlays = mapView.getOverlays();
+        List<BoundaryPoint> boundaries = Quest.getBoundaryPoints(intent);
         Drawable dCenter = this.getResources().getDrawable(R.drawable.center);
         Drawable dUser = this.getResources().getDrawable(R.drawable.user);
         Drawable dBoundary = this.getResources().getDrawable(R.drawable.boundary);
         
-        QuestOverlay qOverlay = new QuestOverlay(dUser,this);
+        QuestOverlay userOverlay = new QuestOverlay(dUser,this);
         UserPoint user = GPSHelper.getLocation(this);
         OverlayItem o = new OverlayItem(user, null, null);
-        qOverlay.addOverlay(o);
-        mapOverlays.add(qOverlay);
+        userOverlay.addOverlay(o);
+        mapOverlays.add(userOverlay);
         
-        qOverlay = new QuestOverlay(dBoundary,this);
-        for (GeoPoint gp : boundaries) {
-        	o = new OverlayItem(gp,null,null);
-        	qOverlay.addOverlay(o);
-        	mapOverlays.add(qOverlay);
-        }
+        QuestOverlay centerOverlay = new QuestOverlay(dCenter,this);
+        CenterPoint c = Quest.getCenterPoint(intent);
+        OverlayItem o2 = new OverlayItem(c, null, null);
+        centerOverlay.addOverlay(o2);
+        mapOverlays.add(centerOverlay);
         
-        qOverlay = new QuestOverlay(dCenter,this);
-        CenterPoint c = quest.getCenter();
-        o = new OverlayItem(c, null, null);
-        qOverlay.addOverlay(o);
-        mapOverlays.add(qOverlay);
-        
-//        CenterPoint center = new CenterPoint(40807090,-73962710);
-//        GeoPoint b1 = new GeoPoint(40810530,-73962190);
-//        GeoPoint b2 = new GeoPoint(40809290,-73959360);
-//        GeoPoint b3 = new GeoPoint(40804190,-73962920);
-//        GeoPoint b4 = new GeoPoint(40805460,-73965840);
-//        mapController.animateTo(center);
-//        mapController.setZoom(16);
-//        mapView.invalidate();
-//        OverlayItem item = new OverlayItem(b1, null, null);
-//        OverlayItem item2 = new OverlayItem(b2, null, null);
-//        OverlayItem item3 = new OverlayItem(b3, null, null);
-//        OverlayItem item4 = new OverlayItem(b4, null, null);
-//        OverlayItem item5 = new OverlayItem(center, null, null);
-//        OverlayItem item6 = new OverlayItem(user,null,null);
-//        qOverlay.addOverlay(item);
-//        qOverlay.addOverlay(item2);
-//        qOverlay.addOverlay(item3);
-//        qOverlay.addOverlay(item4);
-//        qOverlay.addOverlay(item5);
-//        qOverlay.addOverlay(item6);
-//        mapOverlays.add(qOverlay);
+        QuestOverlay boundaryOverlay = new QuestOverlay(dBoundary,this);
+        OverlayItem o3 = new OverlayItem(boundaries.get(0),null,null);
+        OverlayItem o4 = new OverlayItem(boundaries.get(1),null,null);
+        OverlayItem o5 = new OverlayItem(boundaries.get(2),null,null);
+        OverlayItem o6 = new OverlayItem(boundaries.get(3),null,null);
+        boundaryOverlay.addOverlay(o3);
+        boundaryOverlay.addOverlay(o4);
+        boundaryOverlay.addOverlay(o5);
+        boundaryOverlay.addOverlay(o6);
+        mapOverlays.add(boundaryOverlay);
     }
 
 	@Override
@@ -177,22 +161,27 @@ public class AnswerQuestionActivity extends MapActivity {
 				boundaries.add(o);
 			}
 			
-			for (int i = 0; i < (1 + boundaries.size()); i++) {
-				if (0 == i) {
-					oldP = boundaries.get(i%(boundaries.size())).getPoint();
-					continue;
+			if (boundaries.size() != 0) {
+				for (int i = 0; i < (1 + boundaries.size()); i++) {
+					if (0 == i) {
+						oldP = boundaries.get(i % (boundaries.size()))
+								.getPoint();
+						continue;
+					}
+					GeoPoint newP = boundaries.get(i % (boundaries.size()))
+							.getPoint();
+					Point p1 = new Point();
+					Point p2 = new Point();
+					Path path = new Path();
+					projection.toPixels(oldP, p1);
+					projection.toPixels(newP, p2);
+					path.moveTo(p2.x, p2.y);
+					path.lineTo(p1.x, p1.y);
+					canvas.drawPath(path, mPaint);
+					oldP = newP;
 				}
-				GeoPoint newP = boundaries.get(i%(boundaries.size())).getPoint();
-				Point p1 = new Point();
-				Point p2 = new Point();
-				Path path = new Path();
-				projection.toPixels(oldP, p1);
-				projection.toPixels(newP,p2);
-				path.moveTo(p2.x, p2.y);
-		        path.lineTo(p1.x,p1.y);
-		        canvas.drawPath(path, mPaint);
-				oldP = newP;
 			}
+			
 			
 //			GeoPoint gP1 = new GeoPoint(19240000,-99120000);
 //	        GeoPoint gP2 = new GeoPoint(37423157, -122085008);

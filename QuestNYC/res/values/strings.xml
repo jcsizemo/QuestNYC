@@ -13,9 +13,6 @@
     <string name="rating">"What did you think of this quest?</string>
     <string name="regular_key">0sh0i4XC5lcHE4m5wt_o0gBPur4_GO5vU595X2g</string>
     <string name="debug_key">0sh0i4XC5lcF0n82pEXLAfYNQ4MYPk0O9mXHSmA</string>
-    <string name="createquest">Create Quest</string>
-    <string name="playquest">Play Quest</string>
-    <string name="deletequest">Delete Quest</string>
     <string name="signUp">Sign Up</string>
     <string name="goBack">Return</string>
     <string name="nickname">What\'s your name?</string>
@@ -31,5 +28,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="delete_question">Delete this quest?</string>
+    <string name="deletequest">Delete Quest</string>
+    <string name="playquest">Play Quest</string>
+    <string name="createquest">Create Quest</string>
 
 </resources>

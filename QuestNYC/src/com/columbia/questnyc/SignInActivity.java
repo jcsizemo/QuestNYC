@@ -1,6 +1,7 @@
 package com.columbia.questnyc;
 
 import com.columbia.quest.create.CreateQuestActivity;
+import com.columbia.server.ServerHelper;
 import com.columbia.server.ServerQuery;
 import com.columbia.server.SignInQuery;
 
@@ -74,6 +75,7 @@ public class SignInActivity extends Activity {
 	public void process(Intent data) {
 		success = data.getBooleanExtra("success", false);
 		isAdmin = data.getBooleanExtra("isAdmin", false);
+		ServerHelper.isAdmin = isAdmin;
 		if (success == true) {
 			Intent intent = new Intent(this, PlayOrCreateActivity.class);
 			intent.putExtra("isAdmin", isAdmin);
