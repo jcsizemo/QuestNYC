@@ -41,6 +41,14 @@ public class SignInActivity extends Activity {
     			Toast.makeText(this, "Email or password field blank", Toast.LENGTH_SHORT).show();
     			return;
     		}
+    		
+    		boolean isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    		
+    		if (!isEmailValid && "!admin".equals(email)) {
+    			Toast.makeText(this, "Invalid email address", Toast.LENGTH_SHORT).show();
+    			return;
+    		}
+    		
     		if (R.id.signInButton == v.getId()) {
     			Intent intent = new Intent(this, SignInQuery.class);
     			intent.putExtra("email", email);
