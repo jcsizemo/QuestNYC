@@ -31,5 +31,7 @@
     <string name="deletequest">Delete Quest</string>
     <string name="playquest">Play Quest</string>
     <string name="createquest">Create Quest</string>
+    <string name="name_quest">Name This Quest</string>
+    <string name="describe_quest">Describe This Quest</string>
 
 </resources>

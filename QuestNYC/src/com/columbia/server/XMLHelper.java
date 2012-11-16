@@ -159,4 +159,26 @@ public class XMLHelper {
 		}
 		return isCorrect;
 	}
+	
+	public String XMLgetQuestId(String xml){
+		String questId = null;
+	    try {
+	        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	        DocumentBuilder db = dbf.newDocumentBuilder();
+	        InputSource is = new InputSource(new StringReader(xml));
+	        Document doc = db.parse(is);
+	        doc.getDocumentElement().normalize();
+	          
+	        NodeList nlst1 = doc.getElementsByTagName("addquest");
+	        Element elmt = (Element) nlst1.item(0);
+	        String exists = elmt.getAttribute("result");
+	        
+	        questId = "";
+	        if(exists.equals("True"))
+	            questId = elmt.getAttribute("questid");
+	    }catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return questId;
+	}
 }

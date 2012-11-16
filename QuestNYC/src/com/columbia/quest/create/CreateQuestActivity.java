@@ -3,7 +3,9 @@ package com.columbia.quest.create;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.columbia.location.BoundaryPoint;
 import com.columbia.location.CenterPoint;
 import com.columbia.places.AddItemizedOverlay;
 import com.columbia.places.AlertDialogManager;
@@ -16,7 +18,10 @@ import com.columbia.places.PlacesList;
 import com.columbia.quest.Quest;
 import com.columbia.quest.QuestActivity;
 import com.columbia.questnyc.R;
+import com.columbia.server.CreateQuestQuery;
+import com.columbia.server.CreateQuestionQuery;
 import com.columbia.server.ServerQuery;
+import com.columbia.server.XMLHelper;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -286,9 +291,7 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 			numberOfQuestionsLabel.setText(quest.getQuestions().size() + " questions");
 		}
 		else if (v.getId() == R.id.submitButton) {
-			Intent intent = new Intent(this, QuestActivity.class);
-			intent.putExtra("quest", quest);
-			intent.putExtra("interactionType", ServerQuery.POST);
+			Intent intent = new Intent(this, NameActivity.class);
 			startActivityForResult(intent,4);
 		}
 	}
@@ -301,10 +304,36 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 			placesListItems = (ArrayList<HashMap<String, String>>) data.getSerializableExtra("placesListItems");
 			populateMap(nearPlaces, placesListItems);
 		}
-		if (requestCode == 3 && resultCode == 1) {
-		}
+//		if (requestCode == 3 && resultCode == 1) {
+//		}
 		if (requestCode == 4 && resultCode == 0) {
-			
+			String name = data.getStringExtra("name");
+			String description = data.getStringExtra("description");
+			List<GeoPoint> boundaries = quest.getBoundaries();
+			CenterPoint c = quest.getCenter();
+			Intent initIntent = new Intent(this,CreateQuestQuery.class);
+			initIntent.putExtra("name", name);
+			initIntent.putExtra("description", description);
+			initIntent.putExtra("interactionType", ServerQuery.GET);
+			initIntent = Quest.addQuestPoints(quest, initIntent);
+			startActivityForResult(initIntent,5);
+		}
+		if (requestCode == 5 && resultCode == 0) {
+			String xml = data.getStringExtra("xml");
+			XMLHelper xH = new XMLHelper();
+			String questId = xH.XMLgetQuestId(xml);
+			Map<String,String> questions = quest.getQuestions();
+			for (String question : questions.keySet()) {
+				Intent qIntent = new Intent(this,CreateQuestionQuery.class);
+				qIntent.putExtra("questId", questId);
+				qIntent.putExtra("question",question);
+				qIntent.putExtra("answer", questions.get(question));
+				startActivityForResult(qIntent,6);
+			}
+		}
+		if (requestCode == 6 && resultCode == 0) {
+			Toast.makeText(this, "Quest created!", Toast.LENGTH_SHORT);
+			finish();
 		}
 	}
 

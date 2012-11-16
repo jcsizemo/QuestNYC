@@ -43,6 +43,9 @@
         <activity android:name="com.columbia.server.QuestQuery"></activity>
         <activity android:name="com.columbia.server.QuestionQuery"></activity>
         <activity android:name="com.columbia.server.AnswerQuery"></activity>
+        <activity android:name="com.columbia.server.CreateQuestQuery"></activity>
+        <activity android:name="com.columbia.server.CreateQuestionQuery"></activity>
+        <activity android:name="com.columbia.quest.create.NameActivity"></activity>
         </application>
 
 </manifest>
