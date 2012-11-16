@@ -1,12 +1,17 @@
 package com.columbia.server;
 
+import java.net.CookieStore;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
 public abstract class ServerQuery extends Activity implements Runnable {
 	
@@ -17,6 +22,7 @@ public abstract class ServerQuery extends Activity implements Runnable {
 	public int interactionType;
 	public Intent intent;
 	
+	@TargetApi(12)
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
