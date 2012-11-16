@@ -30,6 +30,7 @@
         android:layout_below="@+id/playQuestButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
+        android:onClick="onClick"
         android:text="@string/deletequest" />
 
 </RelativeLayout>

@@ -57,6 +57,7 @@ public class QuestionActivity extends ListActivity {
 		Question q = questions.get(position);
 		Intent intent = new Intent(this,AnswerQuestionActivity.class);
 		intent.putExtra("question", q.getSentence());
+		intent.putExtra("id", q.getId());
 		intent.putExtras(pointData);
 		startActivityForResult(intent,5);
 	}

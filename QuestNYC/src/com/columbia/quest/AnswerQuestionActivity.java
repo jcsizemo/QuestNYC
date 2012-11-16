@@ -9,9 +9,11 @@ import com.columbia.location.CenterPoint;
 import com.columbia.location.GPSHelper;
 import com.columbia.location.UserPoint;
 import com.columbia.questnyc.R;
+import com.columbia.server.AnswerQuery;
 import com.columbia.server.QuestionQuery;
 import com.columbia.server.ServerQuery;
 import com.columbia.server.SignInQuery;
+import com.columbia.server.XMLHelper;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapActivity;
@@ -36,6 +38,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AnswerQuestionActivity extends MapActivity {
@@ -45,6 +48,9 @@ public class AnswerQuestionActivity extends MapActivity {
 	Projection projection;
 	Intent intent;
 	List<Overlay> mapOverlays;
+	String question;
+	TextView questionLabel;
+	int id;
 	
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
@@ -55,6 +61,10 @@ public class AnswerQuestionActivity extends MapActivity {
         mapView = (MapView) findViewById(R.id.mapview); // get Map view
         mapOverlays = mapView.getOverlays();
         intent = getIntent();
+        id = intent.getIntExtra("id", 0);
+        question = intent.getStringExtra("question");
+        questionLabel = (TextView) findViewById(R.id.questionLabel);
+        questionLabel.setText(question);
         
         mapController = mapView.getController();
         projection = mapView.getProjection();
@@ -118,8 +128,10 @@ public class AnswerQuestionActivity extends MapActivity {
 			if ("".equals(answer)) {
 				Toast.makeText(this, "No answer", Toast.LENGTH_SHORT).show();
 			}
-			Intent answerIntent = new Intent(this,QuestionQuery.class);
+			Intent answerIntent = new Intent(this,AnswerQuery.class);
+			answerIntent.putExtra("interactionType", ServerQuery.GET);
 			answerIntent.putExtra("answer", answer);
+			answerIntent.putExtra("id", id);
 			startActivityForResult(answerIntent,5);
 		}
 	}
@@ -128,7 +140,16 @@ public class AnswerQuestionActivity extends MapActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 5 && resultCode == 0) {
-			
+			String sAnswer = data.getStringExtra("answer");
+			XMLHelper xHelper = new XMLHelper();
+			boolean isCorrect = xHelper.XMLCheckAnswer(sAnswer);
+			if (isCorrect) {
+				Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+				finish();
+			}
+			else {
+				Toast.makeText(this, "Incorrect answer", Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 	

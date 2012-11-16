@@ -24,6 +24,7 @@ public class PlayOrCreateActivity extends Activity {
         Button deleteQuestButton = (Button) findViewById(R.id.deleteQuestButton);
         if (!isAdmin) {
         	deleteQuestButton.setVisibility(View.INVISIBLE);
+        	
         }
     }
 	
