@@ -11,24 +11,26 @@ import org.apache.http.client.methods.HttpGet;
 import android.content.Intent;
 import android.os.Bundle;
 
-public class DeleteQuery extends ServerQuery {
+public class RatingQuery extends ServerQuery {
 	
 	Intent intent;
 	String query;
 	int interactionType;
-	int id;
+	int questId;
+	float rating;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		intent = getIntent();
-		id = intent.getIntExtra("id", 0);
+		questId = intent.getIntExtra("questId", 0);
 		interactionType = intent.getIntExtra("interactionType",0);
+		rating = intent.getFloatExtra("rating", 0);
 		this.execute();
 	}
 	
 	public void run() {
-		query = address + "/deletequest/?questid=" + id + "&username=" + ServerHelper.email + "&password=" + ServerHelper.password;
+		query = address + "/ratequest/?questid=" + questId + "&rate=" + rating + "&username=" + ServerHelper.email + "&password=" + ServerHelper.password;
 		
 		HttpResponse response = null;
 		if (ServerQuery.GET == interactionType) {
@@ -48,7 +50,7 @@ public class DeleteQuery extends ServerQuery {
 		}
 
 		
-		intent.putExtra("questions", sResponse);
+		intent.putExtra("xml", sResponse);
     	setResult(0,intent);
     	finish();
 	}

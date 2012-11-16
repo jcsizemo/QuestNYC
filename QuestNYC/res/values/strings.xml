@@ -10,7 +10,6 @@
     <string name="help2">Once you are logged in, your location will be determined and you will be presented a list of quests in your area.</string>
     <string name="help3">Solving these quests will require a keen eye and a sharp mind. Are you up to the challenge?</string>
     <string name="help4">That\'s all there is to it! Have fun questing! (press back button to exit)</string>
-    <string name="rating">"What did you think of this quest?</string>
     <string name="regular_key">0sh0i4XC5lcHE4m5wt_o0gBPur4_GO5vU595X2g</string>
     <string name="debug_key">0sh0i4XC5lcF0n82pEXLAfYNQ4MYPk0O9mXHSmA</string>
     <string name="signUp">Sign Up</string>
@@ -33,5 +32,6 @@
     <string name="createquest">Create Quest</string>
     <string name="name_quest">Name This Quest</string>
     <string name="describe_quest">Describe This Quest</string>
+    <string name="rating">What did you think?</string>
 
 </resources>

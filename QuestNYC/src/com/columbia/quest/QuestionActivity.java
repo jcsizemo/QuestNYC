@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class QuestionActivity extends ListActivity {
@@ -21,6 +22,7 @@ public class QuestionActivity extends ListActivity {
 	Bundle pointData;
 	private ArrayList<Question> questions;
 	private ArrayList<String> questionLabels = new ArrayList<String>();
+	int questId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class QuestionActivity extends ListActivity {
 		intent = getIntent();
 		pointData = intent.getExtras();
 		int id = intent.getIntExtra("id", 0);
+		questId = id;
 		Intent intent = new Intent(this, QuestionQuery.class);
 		intent.putExtra("id", id);
 		intent.putExtra("interactionType", ServerQuery.GET);
@@ -48,7 +51,24 @@ public class QuestionActivity extends ListActivity {
 					android.R.layout.simple_list_item_1, questionLabels.toArray()));
 		}
 		if (requestCode == 5 && resultCode == 0) {
-			
+			boolean isCorrect = data.getBooleanExtra("correct", false);
+			boolean hasFinished = true;
+			if (isCorrect) {
+				for (Question q : questions) {
+					if (q.getSolved() == false) {
+						hasFinished = q.getSolved();
+					}
+				}
+				if (hasFinished) {
+					Intent rateIntent = new Intent(this, RatingActivity.class);
+					rateIntent.putExtra("questId", questId);
+					startActivityForResult(rateIntent,7);
+				}
+			}
+		}
+		if (requestCode == 7 && resultCode == 0) {
+			Toast.makeText(this,"Congratulations! You did it!",Toast.LENGTH_SHORT).show();
+			finish();
 		}
 	}
 	
@@ -57,7 +77,7 @@ public class QuestionActivity extends ListActivity {
 		Question q = questions.get(position);
 		Intent intent = new Intent(this,AnswerQuestionActivity.class);
 		intent.putExtra("question", q.getSentence());
-		intent.putExtra("id", q.getId());
+		intent.putExtra("questionId", q.getId());
 		intent.putExtras(pointData);
 		startActivityForResult(intent,5);
 	}

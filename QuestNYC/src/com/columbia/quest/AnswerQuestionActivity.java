@@ -50,7 +50,7 @@ public class AnswerQuestionActivity extends MapActivity {
 	List<Overlay> mapOverlays;
 	String question;
 	TextView questionLabel;
-	int id;
+	int questionId;
 	
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
@@ -61,7 +61,7 @@ public class AnswerQuestionActivity extends MapActivity {
         mapView = (MapView) findViewById(R.id.mapview); // get Map view
         mapOverlays = mapView.getOverlays();
         intent = getIntent();
-        id = intent.getIntExtra("id", 0);
+        questionId = intent.getIntExtra("questionId", 0);
         question = intent.getStringExtra("question");
         questionLabel = (TextView) findViewById(R.id.questionLabel);
         questionLabel.setText(question);
@@ -131,7 +131,7 @@ public class AnswerQuestionActivity extends MapActivity {
 			Intent answerIntent = new Intent(this,AnswerQuery.class);
 			answerIntent.putExtra("interactionType", ServerQuery.GET);
 			answerIntent.putExtra("answer", answer);
-			answerIntent.putExtra("id", id);
+			answerIntent.putExtra("questionId", questionId);
 			startActivityForResult(answerIntent,5);
 		}
 	}
@@ -145,6 +145,8 @@ public class AnswerQuestionActivity extends MapActivity {
 			boolean isCorrect = xHelper.XMLCheckAnswer(sAnswer);
 			if (isCorrect) {
 				Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+				setResult(0,intent);
+				intent.putExtra("correct", true);
 				finish();
 			}
 			else {

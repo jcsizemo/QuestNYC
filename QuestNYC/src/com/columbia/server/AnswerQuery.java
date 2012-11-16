@@ -25,7 +25,7 @@ public class AnswerQuery extends ServerQuery {
 		
 		intent = getIntent();
 		answer = intent.getStringExtra("answer");
-		questionId = intent.getIntExtra("id", 0);
+		questionId = intent.getIntExtra("questionId", 0);
 		interactionType = intent.getIntExtra("interactionType",0);
 		this.execute();
 	}

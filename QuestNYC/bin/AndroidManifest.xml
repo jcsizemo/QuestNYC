@@ -46,6 +46,9 @@
         <activity android:name="com.columbia.server.CreateQuestQuery"></activity>
         <activity android:name="com.columbia.server.CreateQuestionQuery"></activity>
         <activity android:name="com.columbia.quest.create.NameActivity"></activity>
+        <activity android:name="com.columbia.server.DeleteQuery"></activity>
+        <activity android:name="com.columbia.quest.AdminQuestDeleteActivity"></activity>
+        <activity android:name="com.columbia.server.RatingQuery"></activity>
         </application>
 
 </manifest>

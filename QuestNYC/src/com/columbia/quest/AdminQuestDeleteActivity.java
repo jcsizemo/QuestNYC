@@ -1,6 +1,7 @@
 package com.columbia.quest;
 
 import com.columbia.questnyc.R;
+import com.columbia.server.ServerQuery;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,6 +24,7 @@ public class AdminQuestDeleteActivity extends Activity {
 	public void onClick(View v) {
 		if (v.getId() == R.id.yesButton) {
 			intent.putExtra("idToDelete", id);
+			intent.putExtra("interactionType", ServerQuery.GET);
 			setResult(0,intent);
 		}
 		else if (v.getId() == R.id.noButton) {

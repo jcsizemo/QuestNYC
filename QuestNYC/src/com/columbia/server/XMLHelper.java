@@ -107,7 +107,7 @@ public class XMLHelper {
 						int solved = Integer.parseInt(fstElmnt
 								.getAttribute("solved"));
 						boolean bSolved = false;
-						if (solved == 1) {
+						if (solved == 2) {
 							bSolved = true;
 						}
 						String type = fstElmnt.getAttribute("type");
