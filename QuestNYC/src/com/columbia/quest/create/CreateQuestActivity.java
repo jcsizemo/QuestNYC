@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.columbia.location.CenterPoint;
-import com.columbia.location.GPSHelper;
 import com.columbia.places.AddItemizedOverlay;
 import com.columbia.places.AlertDialogManager;
 import com.columbia.places.ConnectionDetector;
@@ -15,8 +14,6 @@ import com.columbia.places.GooglePlaces;
 import com.columbia.places.Place;
 import com.columbia.places.PlacesList;
 import com.columbia.questnyc.R;
-import com.columbia.server.ServerQuery;
-import com.columbia.server.SignInQuery;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -29,12 +26,9 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -43,7 +37,8 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class CreateQuestActivity extends MapActivity implements OnTouchListener {
 	
@@ -76,13 +71,23 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
     OverlayItem overlayitem;
     double latitude;
     double longitude;
-    Button placeButton;
     Drawable dCenter;
     Drawable dUser;
     Drawable dBoundary;
+    int centerLat;
+    int centerLong;
+    
+    TextView instructions;
+    Button placeButton;
+    Button startOverButton;
+    TextView questionLabel;
+    EditText questionField;
+    TextView answerLabel;
+    EditText answerField;
+    TextView numberOfQuestionsLabel;
+    Button submitButton;
     
     List<OverlayItem> questPoints = new ArrayList<OverlayItem>();
-    GeoPoint center;
 	
 	@SuppressWarnings("deprecation")
 	@TargetApi(13)
@@ -92,6 +97,22 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
         setContentView(R.layout.create_quest_layout);
         
         placeButton = (Button) findViewById(R.id.placeButton);
+        instructions = (TextView) findViewById(R.id.instructionsLabel);
+        startOverButton = (Button) findViewById(R.id.startOverButton);
+        questionLabel = (TextView) findViewById(R.id.questionLabel);
+        questionField = (EditText) findViewById(R.id.questionField);
+        answerLabel = (TextView) findViewById(R.id.answerLabel);
+        answerField = (EditText) findViewById(R.id.answerField);
+        numberOfQuestionsLabel = (TextView) findViewById(R.id.numberOfQuestionsLabel);
+        submitButton = (Button) findViewById(R.id.submitButton);
+        
+        questionLabel.setVisibility(View.INVISIBLE);
+        questionField.setVisibility(View.INVISIBLE);
+        answerLabel.setVisibility(View.INVISIBLE);
+        answerField.setVisibility(View.INVISIBLE);
+        numberOfQuestionsLabel.setVisibility(View.INVISIBLE);
+        submitButton.setVisibility(View.INVISIBLE);
+        
         cd = new ConnectionDetector(getApplicationContext());
         
         dUser = this.getResources().getDrawable(R.drawable.user);
@@ -132,7 +153,7 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
  
         mapOverlays = mapView.getOverlays();
  
-        // Geopoint to place on map
+        // Geopoint to user on map
         geoPoint = new GeoPoint((int) (latitude * 1E6),
                 (int) (longitude * 1E6));
  
@@ -157,49 +178,7 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
  
         mc = mapView.getController();
         mc.animateTo(geoPoint);
- 
-//        // These values are used to get map boundary area
-//        // The area where you can see all the markers on screen
-//        int minLat = Integer.MAX_VALUE;
-//        int minLong = Integer.MAX_VALUE;
-//        int maxLat = Integer.MIN_VALUE;
-//        int maxLong = Integer.MIN_VALUE;
-// 
-//        // check for null in case it is null
-//        if (nearPlaces.results != null) {
-//            // loop through all the places
-//            for (Place place : nearPlaces.results) {
-//                latitude = place.geometry.location.lat; // latitude
-//                longitude = place.geometry.location.lng; // longitude
-// 
-//                // Geopoint to place on map
-//                geoPoint = new GeoPoint((int) (latitude * 1E6),
-//                        (int) (longitude * 1E6));
-// 
-//                // Map overlay item
-//                overlayitem = new OverlayItem(geoPoint, place.name,
-//                        place.vicinity);
-// 
-//                itemizedOverlay.addOverlay(overlayitem);
-// 
-//                // calculating map boundary area
-//                minLat  = (int) Math.min( geoPoint.getLatitudeE6(), minLat );
-//                minLong = (int) Math.min( geoPoint.getLongitudeE6(), minLong);
-//                maxLat  = (int) Math.max( geoPoint.getLatitudeE6(), maxLat );
-//                maxLong = (int) Math.max( geoPoint.getLongitudeE6(), maxLong );
-//            }
-//            mapOverlays.add(itemizedOverlay);
-// 
-//            // showing all overlay items
-//            itemizedOverlay.populateNow();
-//        }
-// 
-//        // Adjusting the zoom level so that you can see all the markers on map
-//        mapView.getController().zoomToSpan(Math.abs( minLat - maxLat ), Math.abs( minLong - maxLong ));
-// 
-//        // Showing the center of the map
-//        mc.animateTo(new GeoPoint((maxLat + minLat)/2, (maxLong + minLong)/2 ));
-//        mapView.postInvalidate();
+        mc.setZoom(15);
         
         WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);	//get display height dimension
         Display display = wm.getDefaultDisplay();
@@ -230,13 +209,13 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
         geoPoint = mapView.getMapCenter();
  
         // Drawable marker icon
-        Drawable drawable = dUser;
+        Drawable drawable = dBoundary;
  
         itemizedOverlay = new AddItemizedOverlay(drawable, this);
  
         // Map overlay item
         overlayitem = new OverlayItem(geoPoint, "Point",
-                "Please place this point.");
+                "This is one of your points.");
  
         itemizedOverlay.addOverlay(overlayitem);
         mapOverlays.add(itemizedOverlay);
@@ -258,18 +237,23 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 		if (v.getId() == R.id.placeButton) {
 			if (placeButton.getText().equals("Save Boundaries")) {
 				Intent getPlacesIntent = new Intent(this,GetPlacesActivity.class);
-				pDialog = new ProgressDialog(this);
-				pDialog.setMessage(Html.fromHtml("<b>Search</b><br/>Loading Places..."));
-		        pDialog.setIndeterminate(false);
-		        pDialog.setCancelable(false);
-		        pDialog.show();
+				getPlacesIntent.putExtra("centerLat",centerLat);
+				getPlacesIntent.putExtra("centerLong",centerLong);
 				startActivityForResult(getPlacesIntent,3);
 			}
 			else {
 				if (questPoints.size() < 5) {
 			        GeoPoint gp = mapView.getMapCenter();
-			        OverlayItem oi = new OverlayItem(gp, "Point",
-			                "Please place this point.");
+			        OverlayItem oi = null;
+			        if (questPoints.size() == 0) {
+			        	gp = new CenterPoint(gp.getLatitudeE6(),gp.getLongitudeE6());
+			        	centerLat = gp.getLatitudeE6();
+			        	centerLong = gp.getLongitudeE6();
+			        	oi = new OverlayItem(gp, "Center", "This is the center.");
+			        }
+			        else {
+			        	oi = new OverlayItem(gp, "Boundary", "This is a boundary");
+			        }
 			        questPoints.add(oi);
 				}
 				if (questPoints.size() == 5) {
@@ -289,8 +273,70 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 3 && resultCode == 0) {
+			nearPlaces = (PlacesList) data.getSerializableExtra("nearPlaces");
+			placesListItems = (ArrayList<HashMap<String, String>>) data.getSerializableExtra("placesListItems");
+			populateMap(nearPlaces, placesListItems);
 		}
 		if (requestCode == 3 && resultCode == 1) {
 		}
+	}
+
+	public void populateMap(PlacesList nearPlaces,
+			ArrayList<HashMap<String, String>> placeListItems) {
+		// These values are used to get map boundary area
+		// The area where you can see all the markers on screen
+	      int minLat = Integer.MAX_VALUE;
+	      int minLong = Integer.MAX_VALUE;
+	      int maxLat = Integer.MIN_VALUE;
+	      int maxLong = Integer.MIN_VALUE;
+
+		// check for null in case it is null
+		if (nearPlaces.results != null) {
+			AddItemizedOverlay aio = new AddItemizedOverlay(dUser,this);
+			// loop through all the places
+			for (Place place : nearPlaces.results) {
+				latitude = place.geometry.location.lat; // latitude
+				longitude = place.geometry.location.lng; // longitude
+
+				// Geopoint to place on map
+				GeoPoint gp = new GeoPoint((int) (latitude * 1E6),
+						(int) (longitude * 1E6));
+
+				// Map overlay item
+				OverlayItem oi = new OverlayItem(gp, place.name,
+						place.vicinity);
+
+				aio.addOverlay(oi);
+
+				// calculating map boundary area
+				minLat = (int) Math.min(gp.getLatitudeE6(), minLat);
+				minLong = (int) Math.min(gp.getLongitudeE6(), minLong);
+				maxLat = (int) Math.max(gp.getLatitudeE6(), maxLat);
+				maxLong = (int) Math.max(gp.getLongitudeE6(), maxLong);
+			}
+			mapOverlays.add(aio);
+
+			// showing all overlay items
+			aio.populateNow();
+		}
+
+		// Adjusting the zoom level so that you can see all the markers on map
+		mapView.getController().zoomToSpan(Math.abs(minLat - maxLat),
+				Math.abs(minLong - maxLong));
+
+		// Showing the center of the map
+		mc.animateTo(new GeoPoint((maxLat + minLat) / 2,
+				(maxLong + minLong) / 2));
+		mapView.postInvalidate();
+		
+		placeButton.setVisibility(View.INVISIBLE);
+        instructions.setVisibility(View.INVISIBLE);
+        startOverButton.setVisibility(View.INVISIBLE);
+		questionLabel.setVisibility(View.VISIBLE);
+        questionField.setVisibility(View.VISIBLE);
+        answerLabel.setVisibility(View.VISIBLE);
+        answerField.setVisibility(View.VISIBLE);
+        numberOfQuestionsLabel.setVisibility(View.VISIBLE);
+        submitButton.setVisibility(View.VISIBLE);
 	}
 }

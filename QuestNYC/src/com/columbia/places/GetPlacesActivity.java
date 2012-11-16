@@ -24,11 +24,15 @@ public class GetPlacesActivity extends Activity implements Runnable{
 	Context mContext;
 	AlertDialogManager alert = new AlertDialogManager();
 	Intent returnIntent;
+	int centerLat;
+	int centerLong;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		returnIntent = getIntent();
+		centerLat = returnIntent.getIntExtra("centerLat", 0);
+		centerLong = returnIntent.getIntExtra("centerLong", 0);
         new Thread(this).start();
 	}
 	
@@ -38,9 +42,8 @@ public class GetPlacesActivity extends Activity implements Runnable{
 		try {
 			String types = null;
 			double radius = 1000;
-			nearPlaces = googlePlaces.search(gps.getLatitude(),
-                    gps.getLongitude(), radius, types);
-			pDialog.dismiss();
+			nearPlaces = googlePlaces.search(centerLat / 1E6,
+                    centerLong / 1E6, radius, types);
 			String status = nearPlaces.status;
 			// Check for all possible status
             if(status.equals("OK")){

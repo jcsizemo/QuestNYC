@@ -24,5 +24,8 @@
     <string name="placemarkers">Create a perimeter above. Pick a center point, and then pick four points around it.</string>
     <string name="place">Place</string>
     <string name="startover">Start Over</string>
+    <string name="question">Question</string>
+    <string name="answer">Answer</string>
+    <string name="submit">Submit</string>
 
 </resources>

@@ -24,7 +24,7 @@
     </com.google.android.maps.MapView>
 
     <TextView
-        android:id="@+id/placeInstructions"
+        android:id="@+id/instructionsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mapView"
@@ -37,7 +37,7 @@
         android:id="@+id/placeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/placeInstructions"
+        android:layout_below="@+id/instructionsLabel"
         android:layout_centerHorizontal="true"
         android:onClick="onClick"
         android:text="@string/place" />
@@ -50,5 +50,61 @@
         android:layout_centerHorizontal="true"
         android:onClick="onClick"
         android:text="@string/startover" />
+
+    <EditText
+        android:id="@+id/answerField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:inputType="textPersonName"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/questionField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/answerField"
+        android:layout_alignLeft="@+id/answerField"
+        android:layout_marginBottom="40dp"
+        android:inputType="textPersonName"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/questionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/questionField"
+        android:layout_centerHorizontal="true"
+        android:text="@string/question"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/answerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/answerField"
+        android:layout_centerHorizontal="true"
+        android:text="@string/answer"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/numberOfQuestionsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/questionLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/numberOfQuestionsLabel"
+        android:layout_alignBottom="@+id/numberOfQuestionsLabel"
+        android:layout_toRightOf="@+id/numberOfQuestionsLabel"
+        android:text="@string/submit" />
 
 </RelativeLayout>
