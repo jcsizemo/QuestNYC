@@ -2,7 +2,6 @@ package com.columbia.server;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -17,7 +16,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.net.wifi.WifiConfiguration.Protocol;
 import android.os.Bundle;
 
 public class SignInQuery extends ServerQuery {
@@ -72,7 +70,6 @@ public class SignInQuery extends ServerQuery {
 	
 	public void run() {
 		
-		
 		if (null != nickname) {
 			query = address + "/signup/submit/";
 		}
@@ -109,6 +106,8 @@ public class SignInQuery extends ServerQuery {
 				}
 			}
 		}
+		ServerHelper.email = email;
+		ServerHelper.password = password;
 		intent.putExtra("success", success);
 		intent.putExtra("isAdmin",isAdmin);
 		setResult(0,intent);

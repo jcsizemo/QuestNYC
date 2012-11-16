@@ -37,8 +37,7 @@ public class QuestQuery extends ServerQuery {
 	}
 
 	public void run() {
-		
-		query = address + "/loadquest/?latitude=" + 40 + "&longitude=" + -73;
+		query = address + "/loadquest/?latitude=" + 40 + "&longitude=" + -73 + "?username=" + ServerHelper.email + "&password=" + ServerHelper.password;
 		
 		DefaultHttpClient dHttpClient = new DefaultHttpClient();
 		BasicClientCookie cookie = new BasicClientCookie("sessionID",ServerHelper.sessionID);

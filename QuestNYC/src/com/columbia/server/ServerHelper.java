@@ -20,75 +20,15 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-public class ServerHelper extends Activity implements Runnable {
+public class ServerHelper {
 
 	String latLong;
 	Double lati;
 	Double longi;
 	String address = "54.243.134.140";
 	static String sessionID = "";
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		new Thread(this).start();
-	}
-
-	public String photoChecker() {
-		StringBuilder sb = new StringBuilder("<Photo>\n");
-		sb.append("<Location>" + latLong + "</Location>\n");
-		sb.append("</Photo>");
-		return sb.toString();
-	}
-
-	public HttpResponse getResponse(String message) {
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(
-				"http://54.243.134.140:7000/loadquest/?longitude=45&latitude=45");
-		// HttpPost httpPost = new HttpPost("http://54.243.134.140/");
-		try {
-			// List<NameValuePair> nameValuePairs= new
-			// ArrayList<NameValuePair>(2);
-			// nameValuePairs.add(new BasicNameValuePair("latitude",
-			// lati.toString()));
-			// nameValuePairs.add(new BasicNameValuePair("longitude",
-			// longi.toString()));
-			return httpClient.execute(httpGet);
-		} catch (ClientProtocolException e) {
-			Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-			return null;
-		} catch (IOException e) {
-			Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-			return null;
-		}
-	}
-
-	public void run() {
-		GeoPoint location = GPSHelper.getLocation(this);
-
-		lati = Double.valueOf(45);
-		longi = Double.valueOf(45);
-		latLong = "Latitude: " + lati + " Longitude: " + longi;
-		String photoToServer = photoChecker();
-		String sResponse;
-		HttpResponse response = getResponse(photoToServer);
-		HttpEntity entity = response.getEntity();
-		try {
-			sResponse = getResponseBody(entity);
-			int stop = 1;
-		} catch (ParseException e) {
-			Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-		} catch (IOException ioe) {
-			if (entity != null) {
-				try {
-					entity.consumeContent();
-				} catch (IOException e) {
-					Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT)
-							.show();
-				}
-			}
-		}
-	}
+	static String email;
+	static String password;
 
 	public static String getResponseBody(final HttpEntity entity) throws IOException,
 			ParseException {
