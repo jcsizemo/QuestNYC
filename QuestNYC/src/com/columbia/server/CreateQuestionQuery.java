@@ -33,6 +33,8 @@ public class CreateQuestionQuery extends ServerQuery {
 	}
 	
 	public void run() {
+		question = question.replaceAll(" ","&nbsp;");
+		answer = answer.replaceAll(" ", "&nbsp;");
 		query = address + "/addquestion/?questid=" + questId + "&type=OpenQuestion&sentence=" + question + "&longitude=-73&latitude=40&difficulty=1&answer=" + answer + "&username=" + ServerHelper.email + "&password=" + ServerHelper.password;
 		
 		HttpResponse response = null;
