@@ -64,11 +64,12 @@ public class AnswerQuestionActivity extends MapActivity {
         questionId = intent.getIntExtra("questionId", 0);
         question = intent.getStringExtra("question");
         questionLabel = (TextView) findViewById(R.id.questionLabel);
-        questionLabel.setText(question);
+        questionLabel.setText(question.replaceAll("_", " "));
         
         mapController = mapView.getController();
         projection = mapView.getProjection();
         mapView.setBuiltInZoomControls(true); // zoomable
+        mapController.setZoom(16);
         
         WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);	//get display height dimension
         Display display = wm.getDefaultDisplay();
@@ -93,7 +94,8 @@ public class AnswerQuestionActivity extends MapActivity {
         Drawable dBoundary = this.getResources().getDrawable(R.drawable.boundary);
         
         QuestOverlay userOverlay = new QuestOverlay(dUser,this);
-        UserPoint user = GPSHelper.getLocation(this);
+//        UserPoint user = GPSHelper.getLocation(this);
+        UserPoint user = new UserPoint(40805633,-73962938);
         OverlayItem o = new OverlayItem(user, null, null);
         userOverlay.addOverlay(o);
         mapOverlays.add(userOverlay);
@@ -103,6 +105,7 @@ public class AnswerQuestionActivity extends MapActivity {
         OverlayItem o2 = new OverlayItem(c, null, null);
         centerOverlay.addOverlay(o2);
         mapOverlays.add(centerOverlay);
+        mapController.animateTo(c);
         
         QuestOverlay boundaryOverlay = new QuestOverlay(dBoundary,this);
         OverlayItem o3 = new OverlayItem(boundaries.get(0),null,null);

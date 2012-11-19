@@ -1,0 +1,7 @@
+<selectquestion result="{{result}}" reason="{{reason}}" type="{{question.type}}" sentence="{{question.sentence}}" id="{{question.id}}">
+	{% if question.type == "ClosedQuestion" %}
+		{% for choice in question.choices %}
+		<choices id="{{choice.id}}">{{choice}}</choices>
+		{% endfor %}
+	{% endif %}
+</selectquestion>

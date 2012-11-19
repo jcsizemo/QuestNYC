@@ -1,0 +1,69 @@
+body {
+
+}
+
+#Header {
+	height:120px;
+	margin-top:100px;
+}
+
+#headerLogo {
+	width:600px;
+	text-align:center;
+	margin:0 auto;		
+	font-family:Vernada;
+	font-size:70px;
+}
+#headerLogo a {
+	text-decoration:none;
+	color:black;
+}
+#ContentBar {
+	width:500px;
+	margin:0 auto;
+	color:#555555;
+	text-align:center;
+}
+
+#ContentBar a {
+	text-decoration:none;
+	font-family:helvetica;
+	font-size:15px;
+	color:#888888;
+	padding:0 3px;
+}
+
+#ContentBar a:hover {
+	color:black;
+}
+
+#Content {
+	width:1300px;
+	padding:20px 20px;
+	overflow:hidden;
+	margin:0 auto;
+}
+
+#Content .picture {
+	width:400px;
+	height:400px;
+	margin:10px;
+	float:left;
+}
+#Content .picture:hover{
+	cursor:pointer;
+}
+
+#Content .picture img {
+	height:400px;
+}
+
+#userProfilePanel {
+	clear:both;
+	float:right;
+	margin-right:380px;
+}
+
+#bulletinBoard{
+	text-align:center;
+}

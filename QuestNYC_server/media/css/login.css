@@ -1,0 +1,44 @@
+#loginWrapper{
+	width:255px;
+	height:180px;
+	margin:200px auto;
+	padding:2px 50px;
+	background-color:#EEEEEE;
+	border:1px solid #CCCCCC;
+	font-family:Trebuchet MS;
+	color:#555555;
+}
+#loginWrapper .wrapperHeading {
+	font-size:20px;
+}
+#loginWrapper .loginPanelWrapper {
+	height:30px;
+}
+
+#loginWrapper .loginPanel{
+	width:40px;
+	float:left;
+	margin-top:5px;
+	font-size:15px;
+}
+
+#loginWrapper .loginInput {
+	width:206px;
+}
+
+#login {
+	float:right;
+}
+
+#loginWrapper .registration {
+	clear:both;
+	font-size:13px;
+	margin-top:5px;
+	float:right;
+}
+
+#loginErrorPanel {
+	color:red;
+	font-size:12px;
+	display:none;
+}

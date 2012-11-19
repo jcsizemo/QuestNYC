@@ -116,7 +116,6 @@ public class CreateQuestActivity extends MapActivity implements OnTouchListener 
         addButton = (Button) findViewById(R.id.addButton);
         submitButton = (Button) findViewById(R.id.submitButton);
         
-        
         questionLabel.setVisibility(View.INVISIBLE);
         questionField.setVisibility(View.INVISIBLE);
         answerLabel.setVisibility(View.INVISIBLE);

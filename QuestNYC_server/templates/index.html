@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel='stylesheet' type='text/css' href='/media/css/login.css'>
+		<script src='/media/js/jquery-1.8.1.min.js'></script>	
+		<script src='/media/js/common.js'></script>
+	</head>
+	<body>
+		<div id="loginWrapper">
+			<p style='text-align:center' class="wrapperHeading">Welcome to <span style='font-size:23px; color:#787878;'>NYCquest</span></p>
+			<form method="get" id='loginForm' action='/loadquest' >
+				{% csrf_token %}
+				<div class='loginPanelWrapper'>
+					<div class='loginPanel' style="width:100px"> Longitude : </div>
+					<input class='loginInput' style="width:50px" type="text" name="longitude" id="id" title="Input your Email address"> 
+				</div>
+				<div class='loginPanelWrapper'>
+					<div class='loginPanel' style="width:100px"> Latitude : </div>
+					<input class='loginInput' style="width:50px" type="text" name="latitude" id="pw" title="Input your Password">
+				</div>
+				<div><input type="submit" value="submit" id='login'></div>
+			</form>
+			<div style="float:right"><button onclick="location.href='/logout/'">logout</button></div>
+			<span id="loginErrorPanel">Incorrect ID or PW. Please try again</span>
+		</div>
+	</body>
+	<script type='text/javascript'>
+		/*
+		$('#login').click(function(){
+			var id = $('#id').val();
+			var pw = $('#pw').val();
+			$.ajax({
+				url: '/login/',
+				type: 'POST',
+				data: {'longitude':id, 'latitude':pw},
+				dataType: 'json',
+				success: function(json) {				
+					if(json['success'] == 'true')
+						location.reload();
+					else {
+						$('#loginErrorPanel').fadeIn().delay(1000).fadeOut();
+					}
+				},
+				error: function() {
+					alert('Error!');
+				}
+			});	
+			return false;
+		});	
+		*/
+	</script>
+</html>

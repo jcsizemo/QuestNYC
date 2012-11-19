@@ -42,7 +42,7 @@ public class AdminQuestActivity extends ListActivity {
 			XMLHelper xHelper = new XMLHelper();
 			quests = xHelper.XMLtoQuest(sQuests);
 			for (Quest q : quests) {
-				questLabels.add("Name: " + q.getName() + "\nDescription: " + q.getDescription() + "\nRating: " + q.rating());
+				questLabels.add("Name: " + q.getName().replaceAll("_", " ") + "\nDescription: " + q.getDescription().replaceAll("_", " ") + "\nRating: " + q.rating());
 			}
 			this.setListAdapter(new ArrayAdapter<Object>(this,
 					android.R.layout.simple_list_item_1, questLabels.toArray()));

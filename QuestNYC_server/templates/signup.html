@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel='stylesheet' type='text/css' href='/media/css/signup.css'>
+		<script src='/media/js/jquery-1.8.1.min.js'></script>	
+		<script src='/media/js/common.js'></script>
+	</head>
+	<body>
+		<div id="suWrapper">
+			<p style='text-align:center' class="wrapperHeading">Welcome to <span style='font-size:23px; color:#787878;'>NYCquest</span></p>
+			<form method="post" id='suForm' >
+				{% csrf_token %}
+				<div class='suPanelWrapper'>
+					<div class='suPanel'> Choose your nickname : </div>
+					<input class='suInput' type="text" name="nn" id="nn" title="Input your Nick Name" placeholder="Input your nickname" > 
+				</div>
+				<div class='suPanelWrapper'>
+					<div class='suPanel'> Choose your id : </div>
+					<input class='suInput' type="text" name="id" id="id" title="Input your Email address" placeholder="Input your e-mail address" > 
+				</div>
+				<div class='suPanelWrapper'>
+					<div class='suPanel'> Create your password : </div>
+					<input class='suInput' type="password" name="pw" id="pw" title="Input your Password" placeholder="********">
+				</div>
+				<div class='suPanelWrapper'>
+					<div class='suPanel'> Confirm your password : </div>
+					<input class='suInput' type="password" name="pw" id="pwConfirm" title="Input your Password" placeholder="********">
+				</div>
+				<div><input type="submit" value="sign up" id='signup'></div>
+			</form>
+			<div id="suTextPanel">Congratulation! Welcome to NYCquest</br><a href="/">Go to Main Page</a></div>
+		</div>
+	</body>
+	<script type='text/javascript'>
+		$('#signup').click(function(){
+			var nn = $('#nn').val();
+			var id = $('#id').val();
+			var pw = $('#pw').val();
+			var pwConfirm = $('#pwConfirm').val();
+			
+			if(!nn) {$('#nn').css({'border':'2px solid red'});return false};
+			if(!id) {$('#id').css({'border':'2px solid red'});return false};
+			if(!pw) {$('#pw').css({'border':'2px solid red'});return false};
+			if(!pwConfirm) {$('#pwConfirm').css({'border':'2px solid red'});return false};
+			
+			if(pw != pwConfirm){
+				alert("Password mismatch!");
+				$('#pw').css({'border':'2px solid red'});
+				$('#pwConfirm').css({'border':'2px solid red'});
+				return false;
+			}
+			
+			$.ajax({
+				url: '/signup/submit/',
+				type: 'POST',
+				data: {'nn':nn, 'username':id, 'password':pw},
+				dataType: 'json',
+				success: function(json) {				
+					if(json['success'] == 'true')
+						$('#suTextPanel').fadeIn();
+					else {
+						alert(json['reason']);
+					}
+				},
+				error: function() {
+					alert('Error!');
+				}
+			});	
+			
+			return false;
+		});	
+	</script>
+</html>

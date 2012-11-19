@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<landmarks result="{{result}}" totalNumber={{totalNumber}} currentPage={{currentPage}}>
+	{% for landmark in landmarks %}
+	<landmark id={{landmark.id}} name={{landmark.name}} address={{landmark.address}} longitude={{landmark.longitude}} latitude={{landmark.latitude}}></landmark>
+	{% endfor %}
+</landmarks>

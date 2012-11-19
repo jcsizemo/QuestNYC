@@ -45,7 +45,7 @@ public class QuestionActivity extends ListActivity {
 			XMLHelper xHelper = new XMLHelper();
 			questions = xHelper.XMLtoQuestion(sQuestions);
 			for (Question q : questions) {
-				questionLabels.add(q.getSentence() + "\nSolved: " + q.getSolved());
+				questionLabels.add(q.getSentence().replaceAll("_", " ") + "\nSolved: " + q.getSolved());
 			}
 			this.setListAdapter(new ArrayAdapter<Object>(this,
 					android.R.layout.simple_list_item_1, questionLabels.toArray()));

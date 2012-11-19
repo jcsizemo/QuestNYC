@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<questList result="{{result}}">
+	{% for quest in quests %}
+	<quest id="{{quest.id}}" name="{{quest.name|safe}}" longitude="{{quest.longitude}}" latitude="{{quest.latitude}}" rating="{{quest.grade}}" solvedRate="{{quest.solvedRate}}">
+		<description>{{quest.description}}</description>
+		<boundary>
+			<coordinate  latitude="{{quest.b1_lat}}" longitude="{{quest.b1_lon}}"></coordinate>
+			<coordinate  latitude="{{quest.b2_lat}}" longitude="{{quest.b2_lon}}"></coordinate>
+			<coordinate  latitude="{{quest.b3_lat}}" longitude="{{quest.b3_lon}}"></coordinate>
+			<coordinate  latitude="{{quest.b4_lat}}" longitude="{{quest.b4_lon}}"></coordinate>
+		</boundary>
+	</quest>
+	{% endfor %}
+</questList>

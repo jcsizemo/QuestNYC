@@ -1,0 +1,2 @@
+<deletequest result="{{result}}" reason="{{reason}}">
+</deletequest>

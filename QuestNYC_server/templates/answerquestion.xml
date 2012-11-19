@@ -1,0 +1,2 @@
+<answerquestion result="{{result}}" reason="{{reason}}" point="{{point}}" correct="{{correct}}">
+</answerquestion>

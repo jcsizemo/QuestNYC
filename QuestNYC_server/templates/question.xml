@@ -1,0 +1,7 @@
+<questionList result="{{result}}">
+	{% for question in questions %}
+	<question id="{{question.id}}" solved="{{question.isSolved}}" type="{{question.type}}" longitude="{{question.longitude}}" latitude="{{question.latitude}}">
+		<sentence>{{question.sentence|safe}}</sentence>
+	</question>
+	{% endfor %}
+</questionList>
