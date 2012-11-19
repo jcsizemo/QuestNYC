@@ -1,0 +1,4 @@
+INDEX VERSION 1.126+/Users/John/Documents/QuestNYC/.metadata/.plugins/org.eclipse.jdt.core
+2946780023.index
+3425862973.index
+1612918984.index

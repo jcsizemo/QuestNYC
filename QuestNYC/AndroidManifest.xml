@@ -1,0 +1,54 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.columbia.questnyc"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="15" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <uses-library android:name="com.google.android.maps" />
+        <activity
+            android:name=".SignInActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="HelpActivity"></activity>
+        <activity android:name="com.columbia.quest.AnswerQuestionActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name="com.columbia.quest.QuestionActivity"></activity>
+        <activity android:name="com.columbia.quest.QuestActivity"></activity>
+        <activity android:name="com.columbia.quest.RatingActivity"></activity>
+        <activity android:name="com.columbia.quest.create.CreateQuestActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name="com.columbia.server.ServerHelper"></activity>
+        <activity android:name="PlayOrCreateActivity"></activity>
+        <activity android:name="NicknameActivity"></activity>
+        <activity android:name="com.columbia.places.MainActivity"></activity>
+        <activity android:name="com.columbia.places.PlacesMapActivity"></activity>
+        <activity android:name="com.columbia.places.SinglePlaceActivity"></activity>
+        <activity android:name="com.columbia.server.SignInQuery"></activity>
+        <activity android:name="com.columbia.places.GetPlacesActivity"></activity>
+        <activity android:name="com.columbia.quest.AdminQuestActivity"></activity>
+        <activity android:name="com.columbia.server.QuestQuery"></activity>
+        <activity android:name="com.columbia.server.QuestionQuery"></activity>
+        <activity android:name="com.columbia.server.AnswerQuery"></activity>
+        <activity android:name="com.columbia.server.CreateQuestQuery"></activity>
+        <activity android:name="com.columbia.server.CreateQuestionQuery"></activity>
+        <activity android:name="com.columbia.quest.create.NameActivity"></activity>
+        <activity android:name="com.columbia.server.DeleteQuery"></activity>
+        <activity android:name="com.columbia.quest.AdminQuestDeleteActivity"></activity>
+        <activity android:name="com.columbia.server.RatingQuery"></activity>
+        </application>
+
+</manifest>

@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.columbia.quest.QuestActivity" >
+
+    <Button
+        android:id="@+id/playQuestAdminButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/playquest" />
+
+    <Button
+        android:id="@+id/createQuestAdminButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/playQuestAdminButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:text="@string/createquest" />
+
+    <Button
+        android:id="@+id/deleteQuestAdminButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/createQuestAdminButton"
+        android:layout_below="@+id/playQuestAdminButton"
+        android:layout_marginTop="60dp"
+        android:text="@string/deletequest" />
+
+</RelativeLayout>
